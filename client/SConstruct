@@ -1,0 +1,21 @@
+import sys
+
+env = Environment()
+
+sources = Split("""
+ShowQ.cpp
+ui/ShowQApp.cpp
+ui/ShowQFrame.cpp
+""")
+
+object_list = env.Object(source = sources)
+
+
+conf = Configure(env)
+if conf.CheckCHeader('wx-2.8/wx/wx.h'):
+    env.Append(CPPPATH = ['/usr/include/wx-2.8/'])
+
+
+env.Program(target='ShowQ', source=object_list)
+env.ParseConfig('wx-config --cxxflags --libs')
+env.Append(CCFLAGS = ['-Wall'])
