@@ -104,6 +104,14 @@ uint32_t ShowService_addCue_result::read(::apache::thrift::protocol::TProtocol* 
     }
     switch (fid)
     {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32(this->success);
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -122,6 +130,11 @@ uint32_t ShowService_addCue_result::write(::apache::thrift::protocol::TProtocol*
 
   xfer += oprot->writeStructBegin("ShowService_addCue_result");
 
+  if (this->__isset.success) {
+    xfer += oprot->writeFieldBegin("success", ::apache::thrift::protocol::T_I32, 0);
+    xfer += oprot->writeI32(this->success);
+    xfer += oprot->writeFieldEnd();
+  }
   xfer += oprot->writeFieldStop();
   xfer += oprot->writeStructEnd();
   return xfer;
@@ -147,6 +160,14 @@ uint32_t ShowService_addCue_presult::read(::apache::thrift::protocol::TProtocol*
     }
     switch (fid)
     {
+      case 0:
+        if (ftype == ::apache::thrift::protocol::T_I32) {
+          xfer += iprot->readI32((*(this->success)));
+          this->__isset.success = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
       default:
         xfer += iprot->skip(ftype);
         break;
@@ -932,10 +953,10 @@ uint32_t ShowService_changeName_presult::read(::apache::thrift::protocol::TProto
   return xfer;
 }
 
-void ShowServiceClient::addCue(const CueData& data, const int32_t location)
+int32_t ShowServiceClient::addCue(const CueData& data, const int32_t location)
 {
   send_addCue(data, location);
-  recv_addCue();
+  return recv_addCue();
 }
 
 void ShowServiceClient::send_addCue(const CueData& data, const int32_t location)
@@ -953,7 +974,7 @@ void ShowServiceClient::send_addCue(const CueData& data, const int32_t location)
   oprot_->getTransport()->flush();
 }
 
-void ShowServiceClient::recv_addCue()
+int32_t ShowServiceClient::recv_addCue()
 {
 
   int32_t rseqid = 0;
@@ -978,12 +999,17 @@ void ShowServiceClient::recv_addCue()
     iprot_->readMessageEnd();
     iprot_->getTransport()->readEnd();
   }
+  int32_t _return;
   ShowService_addCue_presult result;
+  result.success = &_return;
   result.read(iprot_);
   iprot_->readMessageEnd();
   iprot_->getTransport()->readEnd();
 
-  return;
+  if (result.__isset.success) {
+    return _return;
+  }
+  throw ::apache::thrift::TApplicationException(::apache::thrift::TApplicationException::MISSING_RESULT, "addCue failed: unknown result");
 }
 
 void ShowServiceClient::getCues(std::vector<CueData> & _return)
@@ -1330,7 +1356,8 @@ void ShowServiceProcessor::process_addCue(int32_t seqid, ::apache::thrift::proto
 
   ShowService_addCue_result result;
   try {
-    iface_->addCue(args.data, args.location);
+    result.success = iface_->addCue(args.data, args.location);
+    result.__isset.success = true;
   } catch (const std::exception& e) {
     if (this->eventHandler_.get() != NULL) {
       this->eventHandler_->handlerError(ctx, "ShowService.addCue");

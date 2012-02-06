@@ -10,6 +10,9 @@ private:
     std::string mName;
 
 public:
+    Cue();
+    Cue(std::string number, std::string name);
+
     std::string Number() { return mNumber; }
     void Number(std::string v) { mNumber = v; }
     

@@ -6,6 +6,7 @@
 #include <server/TSimpleServer.h>
 #include <transport/TServerSocket.h>
 #include <transport/TBufferTransports.h>
+#include "../lib/Environment.h"
 
 using namespace ::apache::thrift;
 using namespace ::apache::thrift::protocol;
@@ -15,10 +16,13 @@ using namespace ::apache::thrift::server;
 using boost::shared_ptr;
 
 class ShowServiceHandler : virtual public ShowServiceIf {
+private:
+  std::shared_ptr<Environment> env;
+  
  public:
-  ShowServiceHandler();
+  ShowServiceHandler(std::shared_ptr<Environment> e);
 
-  void addCue(const CueData& data, const int32_t location);
+  int32_t addCue(const CueData& data, const int32_t location);
   void getCues(std::vector<CueData> & _return);
   void getCue(CueData& _return, const int32_t id);
   void deleteCue(const int32_t id);
@@ -31,9 +35,10 @@ class ShowLabServer
 {
 private:
         shared_ptr<TSimpleServer> mServer;
+        std::shared_ptr<Environment> env;
 public:
     void start();
-    ShowLabServer();
+    ShowLabServer(std::shared_ptr<Environment> e);
 };
 
 #endif

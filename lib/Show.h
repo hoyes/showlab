@@ -19,6 +19,12 @@ public:
     void Name(std::string v) { mName = v; }
     
     Cue& cue(int i) { return cues[i]; }
+    int addCue(const std::string number, const std::string name, const int position);
+    int addCue(Cue& c, int);
+    const CueList::iterator& cuesBegin() { return cues.begin(); };
+    const CueList::iterator& cuesEnd() { return cues.end(); };
+    
+    std::string suggestCueNumber(int position);
 };
 
 #endif

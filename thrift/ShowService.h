@@ -15,7 +15,7 @@
 class ShowServiceIf {
  public:
   virtual ~ShowServiceIf() {}
-  virtual void addCue(const CueData& data, const int32_t location) = 0;
+  virtual int32_t addCue(const CueData& data, const int32_t location) = 0;
   virtual void getCues(std::vector<CueData> & _return) = 0;
   virtual void getCue(CueData& _return, const int32_t id) = 0;
   virtual void deleteCue(const int32_t id) = 0;
@@ -50,8 +50,9 @@ class ShowServiceIfSingletonFactory : virtual public ShowServiceIfFactory {
 class ShowServiceNull : virtual public ShowServiceIf {
  public:
   virtual ~ShowServiceNull() {}
-  void addCue(const CueData& /* data */, const int32_t /* location */) {
-    return;
+  int32_t addCue(const CueData& /* data */, const int32_t /* location */) {
+    int32_t _return = 0;
+    return _return;
   }
   void getCues(std::vector<CueData> & /* _return */) {
     return;
@@ -130,18 +131,31 @@ class ShowService_addCue_pargs {
 
 };
 
+typedef struct _ShowService_addCue_result__isset {
+  _ShowService_addCue_result__isset() : success(false) {}
+  bool success;
+} _ShowService_addCue_result__isset;
 
 class ShowService_addCue_result {
  public:
 
-  ShowService_addCue_result() {
+  ShowService_addCue_result() : success(0) {
   }
 
   virtual ~ShowService_addCue_result() throw() {}
 
+  int32_t success;
 
-  bool operator == (const ShowService_addCue_result & /* rhs */) const
+  _ShowService_addCue_result__isset __isset;
+
+  void __set_success(const int32_t val) {
+    success = val;
+  }
+
+  bool operator == (const ShowService_addCue_result & rhs) const
   {
+    if (!(success == rhs.success))
+      return false;
     return true;
   }
   bool operator != (const ShowService_addCue_result &rhs) const {
@@ -155,6 +169,10 @@ class ShowService_addCue_result {
 
 };
 
+typedef struct _ShowService_addCue_presult__isset {
+  _ShowService_addCue_presult__isset() : success(false) {}
+  bool success;
+} _ShowService_addCue_presult__isset;
 
 class ShowService_addCue_presult {
  public:
@@ -162,6 +180,9 @@ class ShowService_addCue_presult {
 
   virtual ~ShowService_addCue_presult() throw() {}
 
+  int32_t* success;
+
+  _ShowService_addCue_presult__isset __isset;
 
   uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
 
@@ -671,9 +692,9 @@ class ShowServiceClient : virtual public ShowServiceIf {
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  void addCue(const CueData& data, const int32_t location);
+  int32_t addCue(const CueData& data, const int32_t location);
   void send_addCue(const CueData& data, const int32_t location);
-  void recv_addCue();
+  int32_t recv_addCue();
   void getCues(std::vector<CueData> & _return);
   void send_getCues();
   void recv_getCues(std::vector<CueData> & _return);
@@ -746,10 +767,14 @@ class ShowServiceMultiface : virtual public ShowServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  void addCue(const CueData& data, const int32_t location) {
+  int32_t addCue(const CueData& data, const int32_t location) {
     size_t sz = ifaces_.size();
     for (size_t i = 0; i < sz; ++i) {
-      ifaces_[i]->addCue(data, location);
+      if (i == sz - 1) {
+        return ifaces_[i]->addCue(data, location);
+      } else {
+        ifaces_[i]->addCue(data, location);
+      }
     }
   }
 

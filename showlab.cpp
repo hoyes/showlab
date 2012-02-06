@@ -21,9 +21,9 @@ int main(int argc, char* argv[]) {
 	m->addFile(y);
 	m->addFile(z);*/
 	
-	Environment e;
+	std::shared_ptr<Environment> e(new Environment);
 	
-	ShowLabServer s;
+	ShowLabServer s(e);
 	s.start();
 	
 }
