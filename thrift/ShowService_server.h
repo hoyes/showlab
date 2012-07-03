@@ -22,12 +22,14 @@ private:
  public:
   ShowServiceHandler(std::shared_ptr<Environment> e);
 
-  int32_t addCue(const CueData& data, const int32_t location);
+  int32_t addCueWithNumber(const double number, const std::string& name);
+  int32_t addCueAtLocation(const int32_t location, const std::string& name);
   void getCues(std::vector<CueData> & _return);
   void getCue(CueData& _return, const int32_t id);
   void deleteCue(const int32_t id);
-  void changeNumber(const int32_t id, const std::string& number);
+  void changeNumber(const int32_t id, const double number);
   void changeName(const int32_t id, const std::string& name);
+  void newShow();
 
 };
 

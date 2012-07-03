@@ -5,10 +5,14 @@ ShowServiceHandler::ShowServiceHandler(std::shared_ptr<Environment> e) : env(e)
 
 }
 
-int32_t  ShowServiceHandler::addCue(const CueData& data, const int32_t location) {
-    // Your implementation goes here
-    printf("addCue\n");
-    return env->getShow().addCue(data.number, data.name, location);
+int32_t ShowServiceHandler::addCueWithNumber(const double number, const std::string& name) {
+   printf("addCueWithNumber\n");
+   return env->getShow().addCueWithNumber(number, name);
+}
+
+int32_t ShowServiceHandler::addCueAtLocation(const int32_t location, const std::string& name) {
+   printf("addCueAtLocation\n");
+   return env->getShow().addCueAtLocation(location, name);
 }
 
   void ShowServiceHandler::getCues(std::vector<CueData> & _return) {
@@ -40,7 +44,7 @@ int32_t  ShowServiceHandler::addCue(const CueData& data, const int32_t location)
     printf("deleteCue\n");
   }
 
-  void ShowServiceHandler::changeNumber(const int32_t id, const std::string& number) {
+  void ShowServiceHandler::changeNumber(const int32_t id, const double number) {
     // Your implementation goes here
     printf("changeNumber\n");
   }
@@ -48,6 +52,11 @@ int32_t  ShowServiceHandler::addCue(const CueData& data, const int32_t location)
   void ShowServiceHandler::changeName(const int32_t id, const std::string& name) {
     // Your implementation goes here
     printf("changeName\n");
+  }
+  
+  void ShowServiceHandler::newShow() {
+    // Your implementation goes here
+    printf("newShow\n");
   }
 
 

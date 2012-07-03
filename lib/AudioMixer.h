@@ -35,7 +35,7 @@ public:
         void addFile(AudioFileRef file);
         
         static int audioCallback(const void *input, void *output, unsigned long frameCount, 
-                const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags, void *userData);
+            const PaStreamCallbackTimeInfo *timeInfo, PaStreamCallbackFlags statusFlags, void *userData);
         
         static void diskThread(void* ptr);
 	

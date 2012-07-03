@@ -1,8 +1,8 @@
 #include "Cue.h"
 
-Cue::Cue() : mNumber(""), mName("") {}
+Cue::Cue() : mNumber(0), mName("") {}
 
-Cue::Cue(std::string number, std::string name) 
+Cue::Cue(double number, std::string name) 
  : mNumber(number), mName(name)
 {
 }

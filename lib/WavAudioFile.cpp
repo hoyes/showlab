@@ -27,8 +27,8 @@ void WavAudioFile::fillBuffer()
         load();
         int num = buffer.reserve();
         float new_data[num];
-        sf_read_float(handler, new_data, num);
-        for (int i=0; i<num; ++i) {
+        int num_fetched = sf_read_float(handler, new_data, num);
+        for (int i=0; i<num_fetched; ++i) {
                 buffer.push_back(new_data[i]);
         }
 }

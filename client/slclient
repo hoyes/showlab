@@ -1,0 +1,43 @@
+#!/usr/bin/env python
+from interface import *
+from thrift import Thrift
+from thrift.transport import TSocket
+from thrift.transport import TTransport
+from thrift.protocol import TBinaryProtocol
+import sys
+
+transport = TSocket.TSocket('localhost', 9155)
+transport = TTransport.TBufferedTransport(transport)
+protocol = TBinaryProtocol.TBinaryProtocol(transport)
+client = ShowService.Client(protocol)
+
+# Connect!
+transport.open()
+
+import cmd;
+
+class ShowLabClient(cmd.Cmd):
+    """ShowLab simple command-line client."""
+    
+    prompt = ">> "
+    intro = "\nShowLab simple command-line client\n"
+    
+    def do_add_cue(self, number=-1.0, name=""):
+        """add_cue [cue_number] [cue_name]"""
+        d = ShowService.CueData()
+        try:
+            d.number = float(number)
+        except ValueError:
+            d.number = -1
+        d.name = name
+        id = client.addCue(d, -1)
+        print id
+        d = client.getCue(id)
+        print "Added cue", d.number, ":", d.name
+    
+    def do_EOF(self, line):
+        print
+        transport.close()
+        sys.exit()
+
+ShowLabClient().cmdloop()

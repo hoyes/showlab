@@ -6,15 +6,15 @@
 class Cue
 {
 private:
-    std::string mNumber;
+    double mNumber;
     std::string mName;
 
 public:
     Cue();
-    Cue(std::string number, std::string name);
+    Cue(double number, std::string name);
 
-    std::string Number() { return mNumber; }
-    void Number(std::string v) { mNumber = v; }
+    double Number() { return mNumber; }
+    void Number(double v) { mNumber = v; }
     
     std::string Name() { return mName; }
     void Name(std::string v) { mName = v; }

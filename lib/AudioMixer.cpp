@@ -22,13 +22,12 @@ void AudioMixer::start()
         
         const PaDeviceInfo *deviceInfo = Pa_GetDeviceInfo(mId);
         mChannels = deviceInfo->maxOutputChannels;
-       // if (mChannels > 2) mChannels =2;
+
         mSampleRate = deviceInfo->defaultSampleRate;
         
-        int error;
         {
                 std::lock_guard<std::mutex> lk(mut_buffer);
-                buffer.set_capacity(mSampleRate * mChannels / 2);        
+                buffer.set_capacity(mSampleRate * mChannels / 4);        
         }
         th = std::thread(&AudioMixer::diskThread, (void*) this);
 
@@ -45,7 +44,7 @@ void AudioMixer::start()
                     NULL,
                     &params,
                     mSampleRate,
-                    0,
+                    paFramesPerBufferUnspecified,
                     paNoFlag, 
                     &AudioMixer::audioCallback,
                     (void *)this );
@@ -77,13 +76,15 @@ int AudioMixer::audioCallback(const void *input, void *output, unsigned long fra
         
         std::lock_guard<std::mutex> lk(m->mut_buffer);
         unsigned int count = frameCount*m->mChannels;
-                
-        for(i=0; i<count; i++) {
-                if (!m->buffer.empty()) {
-                        *out++ = m->buffer.front();
-                        m->buffer.pop_front();
-                }
-                else *out++ = 0.0;
+        
+        unsigned int max_data = count;
+        if (count > m->buffer.size()) max_data = m->buffer.size();
+        for(i=0; i<max_data; i++) {
+                *out++ = m->buffer.front();
+                m->buffer.pop_front();
+        }
+        for (i=max_data; i < count; i++) {
+                *out++ = 0.0;
         }
         return 0;
 }
@@ -91,9 +92,10 @@ int AudioMixer::audioCallback(const void *input, void *output, unsigned long fra
 void AudioMixer::diskThread(void* ptr)
 {
         AudioMixer* m = (AudioMixer*) ptr;
-        std::unique_lock<std::mutex> lk(m->mut_running);
+        std::unique_lock<std::mutex> lk(m->mut_running, std::defer_lock);
         while(m->running) {
-                lk.unlock();
+                std::this_thread::sleep_for(std::chrono::milliseconds(20));
+                lk.lock();
                 int num;
                 {
                     std::lock_guard<std::mutex> lk(m->mut_buffer);
@@ -103,7 +105,6 @@ void AudioMixer::diskThread(void* ptr)
                     std::vector<float> totals;
                     totals.assign(num, 0);
                     int numframes = 0;
-                    
                     for (auto i = m->audioFiles.begin(); i != m->audioFiles.end(); ++i) {
                        int error;
                        SRC_STATE* src_state = src_new(SRC_SINC_BEST_QUALITY, (*i)->Channels(), &error);
@@ -139,6 +140,11 @@ void AudioMixer::diskThread(void* ptr)
                        }
                        (*i)->clearSamples(data.input_frames_used * (*i)->Channels());
                        src_delete(src_state);
+                       
+                       if (samples->size() < fnum) {
+                                //We've reached the end of the file so delete it from mixer
+                                i = m->audioFiles.erase(i) - 1;
+                       }
                     }
                     {
                         std::lock_guard<std::mutex> lk(m->mut_buffer);
@@ -147,9 +153,7 @@ void AudioMixer::diskThread(void* ptr)
                         }
                     }
                 }
-
-                std::this_thread::sleep_for(std::chrono::milliseconds(50));
-                lk.lock();
+                lk.unlock();
         }
 }
 

@@ -7,16 +7,22 @@ Show::Show() : mName("")
 {
 
 }
-
-int Show::addCue(const std::string number, const std::string name, const int position = -1)
+    
+int Show::addCueWithNumber(const double number, const std::string name)
 {
         Cue c(number, name);
-        return addCue(c, position);
+        return addCue(c, -1);
 }
 
-int Show::addCue(Cue& c, int position = -1)
+int Show::addCueAtLocation(const int location, const std::string name)
 {
-        if (c.Number() == "") c.Number(suggestCueNumber(position));
+        Cue c(location, name);
+        return addCue(c , -1);
+}
+
+int Show::addCue(Cue& c, int position)
+{
+        if (c.Number() <= 0) c.Number(suggestCueNumber(position));
 
         if (position == -1) {
                 cues.push_back(c);
@@ -28,48 +34,50 @@ int Show::addCue(Cue& c, int position = -1)
         }
 }
 
-std::string Show::suggestCueNumber(int position)
+double Show::suggestCueNumber(int position)
 {
-        if (position == -1) position = cues.size();
+        if (position == -1) {
+            if (cues.size() == 0) return 1.0;
+            position = cues.size();
+        }
         
-        float lower = -1, upper = -1, current;
+        double lower = -1, upper = -1, current;
         
         //Find previous cue that has numerical cue number
-        int i = position - 1;
-                
-        while (i > 0) {
-                try {
-                        lower = boost::lexical_cast<float>(cues[i].Number());
-                        break;
-                }
-                catch (boost::bad_lexical_cast&) {
+        unsigned int i;
+        if (position > 0) {
+                for (i = position - 1; i >= 0; --i) {
+                        std::cout << i << std::endl;
+                    lower = cues[i].Number();
+                    break;
                 }
         }
-        
-        //Find next cue that has numerical cue number
-        i = position;
-        while (i < cues.size()) {
-                try {
-                        upper = boost::lexical_cast<float>(cues[i].Number());
-                        break;
-                }
-                catch (boost::bad_lexical_cast&) {
-                }
-        }
-        
-        if (lower == -1 && upper == -1) return "1";
 
-                       std::cout << upper << " " << lower << std::endl; 
-        if (upper == -1) return boost::lexical_cast<std::string>(floor(lower + 1));
-        if (upper < lower) return "";
+        //Find next cue that has numerical cue number
+        for (i = position; i < cues.size(); ++i) {
+            upper = cues[i].Number();
+            break;
+        }
+
+        if (upper == -1) return floor(lower + 1);
+        if (upper < lower) return 0;
 
         current = (lower + upper) / 2;
 
         int exp = (int) log10(upper - lower);
         float bound = floor(current * pow(10,-exp)) * pow(10,exp);
-        if (bound > lower) return boost::lexical_cast<std::string>(bound);
+        if (bound > lower) return bound;
         bound = ceil(current * pow(10,-exp)) * pow(10,exp);
-        if (bound < upper) return boost::lexical_cast<std::string>(bound);
+        if (bound < upper) return bound;
         
-        return boost::lexical_cast<std::string>(current);
+        return current;
+}
+
+int Show::findPosition(double number)
+{
+        /*int pos = 0;
+        for (int i =  position; i < cues.size(); ++i) {
+            if (number > 
+        }*/
+        return 0;
 }
