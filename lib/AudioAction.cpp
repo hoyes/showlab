@@ -1,4 +1,5 @@
 #include "AudioAction.h"
+#include "AudioFileFactory.h"
 
 AudioAction::AudioAction(std::string name, std::string filename)
     : Action(name), mFileName(filename)
@@ -8,6 +9,10 @@ AudioAction::AudioAction(std::string name, std::string filename)
 
 void AudioAction::load()
 {
-    mAudioFile = AudioFileRef(new AudioFile);
-    mAudioFile->open(FileName());
+    mAudioFile = AudioFileFactory::create(FileName());
+}
+
+void AudioAction::doFire()
+{
+
 }

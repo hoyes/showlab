@@ -29,8 +29,6 @@ public:
 	virtual void addToBuffer(SampleList samples, unsigned int num) = 0;
 	SampleList getSamples(int number);
 	void clearSamples(int number);
-	
-	static AudioFileRef create(std::string filename);
 
 protected:
 	virtual void doLoad() = 0;

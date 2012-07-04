@@ -17,8 +17,8 @@ int main(int argc, char* argv[]) {
 	AudioManager man;
 	AudioMixerRef m = man.addMixer("default");
 	
-	//m->addFile(x);
-        //m->addFile(y);
+	m->addFile(x);
+    m->addFile(y);
 	m->addFile(z);
 	
 	std::shared_ptr<Environment> e(new Environment);
