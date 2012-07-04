@@ -1,6 +1,6 @@
-#include "WavAudioFile.h"
+#include "SndFileAudioFile.h"
 
-void WavAudioFile::doLoad()
+void SndFileAudioFile::doLoad()
 {
         SF_INFO info;
         handler = sf_open(FileName().c_str(), SFM_READ, &info);
@@ -9,12 +9,12 @@ void WavAudioFile::doLoad()
         Channels(info.channels);
 }
 
-void WavAudioFile::doUnload()
+void SndFileAudioFile::doUnload()
 {
         sf_close(handler);
 }
 
-WavAudioFile::~WavAudioFile()
+SndFileAudioFile::~SndFileAudioFile()
 {
         try {
                unload();
@@ -22,7 +22,7 @@ WavAudioFile::~WavAudioFile()
         catch(...) {}
 }
 
-void WavAudioFile::addToBuffer(SampleList samples, unsigned int num)
+void SndFileAudioFile::addToBuffer(SampleList samples, unsigned int num)
 {
         load();
         float new_data[num];

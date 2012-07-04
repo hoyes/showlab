@@ -1,27 +1,24 @@
 #include <iostream>
-#include "lib/WavAudioFile.h"
-#include "lib/AudioManager.h"
+#include "lib/audio/AudioFileFactory.h"
+#include "lib/audio/AudioManager.h"
 #include "lib/Environment.h"
 #include "thrift/ShowService_server.h"
 
 int main(int argc, char* argv[]) {
-	AudioFileRef x(new WavAudioFile);
-	x->open("/home/peter/Shows/2011-05 Romeo and Juliet/edited/liebestod instruemtnal.wav");
+//	AudioFileRef x = AudioFileFactory::create("/home/peter/Shows/2011-05 Romeo and Juliet/edited/liebestod instruemtnal.wav");
+	AudioFileRef x = AudioFileFactory::create("finale.ogg");
 
-	AudioFileRef y(new WavAudioFile);
-	y->open("/home/peter/Shows/2011-05 Romeo and Juliet/edited/birdsong.wav");
+	AudioFileRef y = AudioFileFactory::create("/home/peter/Shows/2011-05 Romeo and Juliet/edited/birdsong.wav");
 	
-	AudioFileRef z(new WavAudioFile);
-	z->open("bell.wav");
+	AudioFileRef z = AudioFileFactory::create("bell.wav");
 	
-	AudioManager man;
-	AudioMixerRef m = man.addMixer("default");
+	EnvironmentRef e(new Environment);
+	
+	AudioMixerRef m = e->getAudioManager().addMixer("default");
 	
 	m->addFile(x);
     m->addFile(y);
 	m->addFile(z);
-	
-	std::shared_ptr<Environment> e(new Environment);
 	
 	ShowLabServer s(e);
 	s.start();	

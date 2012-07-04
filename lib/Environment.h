@@ -2,7 +2,8 @@
 #define ENVIRONMENT_H
 
 #include "Show.h"
-#include "AudioManager.h"
+#include "audio/AudioManager.h"
+#include <memory>
 
 class Environment
 {
@@ -14,5 +15,7 @@ public:
     Show& getShow() { return s; }
     AudioManager& getAudioManager() { return am; }
 };
+
+typedef std::shared_ptr<Environment> EnvironmentRef;
 
 #endif

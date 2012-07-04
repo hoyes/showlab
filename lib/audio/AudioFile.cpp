@@ -24,8 +24,6 @@ void AudioFile::unload() {
         }
 }
 
-
-
 AudioFile::~AudioFile()
 {
         try {

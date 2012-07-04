@@ -1,7 +1,7 @@
 #include "Action.h"
 #include <chrono>
 
-Action::Action(std::string name) : mName(name), mPreWait(0), mPostWait(0) {}
+Action::Action(EnvironmentRef e, std::string name) : mName(name), mPreWait(0), mPostWait(0), env(e) {}
 
 void Action::fire()
 {

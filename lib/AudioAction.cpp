@@ -1,8 +1,8 @@
 #include "AudioAction.h"
-#include "AudioFileFactory.h"
+#include "audio/AudioFileFactory.h"
 
-AudioAction::AudioAction(std::string name, std::string filename)
-    : Action(name), mFileName(filename)
+AudioAction::AudioAction(EnvironmentRef e, std::string name, std::string filename)
+    : Action(e, name), mFileName(filename)
 {
     load();
 }

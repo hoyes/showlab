@@ -2,16 +2,18 @@
 #define AUDIO_ACTION_H
 
 #include "Action.h"
-#include "AudioFile.h"
+#include "audio/AudioFile.h"
+#include "audio/AudioLevels.h"
 
 class AudioAction : public Action
 {
 private:
     std::string mFileName;
     AudioFileRef mAudioFile;
+    AudioLevels levels;    
     
 public:
-    AudioAction(std::string name = "", std::string filename = "");
+    AudioAction(EnvironmentRef e, std::string name = "", std::string filename = "");
     
     std::string FileName() { return mFileName; }
     void FileName(std::string v) { mFileName = v; }

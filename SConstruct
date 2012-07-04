@@ -4,6 +4,7 @@ env = Environment()
 
 sources = Glob("*.cpp")
 sources.extend(Glob("lib/*.cpp"))
+sources.extend(Glob("lib/audio/*.cpp"))
 sources.extend(Glob("thrift/*.cpp"))
 object_list = env.Object(source = sources)
 
