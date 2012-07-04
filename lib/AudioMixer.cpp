@@ -27,7 +27,7 @@ void AudioMixer::start()
         
         {
                 std::lock_guard<std::mutex> lk(mut_buffer);
-                buffer.set_capacity(mSampleRate * mChannels / 16);        
+                buffer.set_capacity(mSampleRate * mChannels / 10);        
         }
         th = std::thread(&AudioMixer::diskThread, (void*) this);
 
@@ -94,7 +94,7 @@ void AudioMixer::diskThread(void* ptr)
         AudioMixer* m = (AudioMixer*) ptr;
         std::unique_lock<std::mutex> lk(m->mut_running, std::defer_lock);
         while(m->running) {
-                std::this_thread::sleep_for(std::chrono::milliseconds(20));
+                std::this_thread::sleep_for(std::chrono::milliseconds(50));
                 lk.lock();
                 int num;
                 {

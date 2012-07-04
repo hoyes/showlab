@@ -13,7 +13,7 @@ void AudioFile::open(std::string fileName)
 void AudioFile::load() {
         if (!loaded) {
                 doLoad();
-                buffer.set_capacity(SampleRate() * Channels() / 16);
+                buffer.set_capacity(SampleRate() * Channels() / 10);
                 loaded = true;
         }
 }
