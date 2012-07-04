@@ -5,6 +5,7 @@ from thrift.transport import TSocket
 from thrift.transport import TTransport
 from thrift.protocol import TBinaryProtocol
 import sys
+import argparse, cmd
 
 transport = TSocket.TSocket('localhost', 9155)
 transport = TTransport.TBufferedTransport(transport)
@@ -14,23 +15,25 @@ client = ShowService.Client(protocol)
 # Connect!
 transport.open()
 
-import cmd;
-
 class ShowLabClient(cmd.Cmd):
     """ShowLab simple command-line client."""
     
     prompt = ">> "
     intro = "\nShowLab simple command-line client\n"
     
-    def do_add_cue(self, number=-1.0, name=""):
+    def do_add_cue(self, line):
         """add_cue [cue_number] [cue_name]"""
-        d = ShowService.CueData()
-        try:
-            d.number = float(number)
-        except ValueError:
-            d.number = -1
-        d.name = name
-        id = client.addCue(d, -1)
+        parts = line.split(" ", 2)
+        number = -1;
+        name = "";
+        if len(parts) >= 1:
+                try:
+                    number = float(parts[0])
+                except ValueError:
+                    pass
+        if len(parts) >= 2:
+                name = parts[1]
+        id = client.addCueWithNumber(number, name)
         print id
         d = client.getCue(id)
         print "Added cue", d.number, ":", d.name

@@ -12,7 +12,7 @@ int main(int argc, char* argv[]) {
 	y->open("/home/peter/Shows/2011-05 Romeo and Juliet/edited/birdsong.wav");
 	
 	AudioFileRef z(new WavAudioFile);
-	z->open("/home/peter/Shows/2011-05 Romeo and Juliet/edited/bell.wav");
+	z->open("bell.wav");
 	
 	AudioManager man;
 	AudioMixerRef m = man.addMixer("default");

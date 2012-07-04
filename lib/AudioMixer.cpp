@@ -111,7 +111,7 @@ void AudioMixer::diskThread(void* ptr)
                        SRC_DATA data;
                        double ratio = m->mSampleRate / (*i)->SampleRate();
                        (*i)->fillBuffer();
-                       int fnum = num / m->mChannels * (*i)->Channels();
+                       unsigned int fnum = num / m->mChannels * (*i)->Channels();
                        auto samples = (*i)->getSamples(fnum * ratio);
 
                        std::vector<float> vals;
