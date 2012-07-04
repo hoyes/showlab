@@ -27,7 +27,7 @@ void AudioMixer::start()
         
         {
                 std::lock_guard<std::mutex> lk(mut_buffer);
-                buffer.set_capacity(mSampleRate * mChannels / 4);        
+                buffer.set_capacity(mSampleRate * mChannels / 16);        
         }
         th = std::thread(&AudioMixer::diskThread, (void*) this);
 
