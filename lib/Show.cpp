@@ -25,8 +25,14 @@ int Show::addCue(Cue& c, int position)
         if (c.Number() <= 0) c.Number(suggestCueNumber(position));
 
         if (position == -1) {
-                cues.push_back(c);
-                return cues.size() - 1;
+                auto it = cues.begin();
+                int pos = 0;
+                for (; it != cues.end(); it++) {
+                    if (it->Number() > c.Number()) break;
+                    pos++;
+                }
+                cues.insert(it, c);
+                return pos;
         }
         else {
                 cues.insert(cues.begin() + position, c);

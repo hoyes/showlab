@@ -23,7 +23,7 @@ class ShowLabClient(cmd.Cmd):
     
     def do_add_cue(self, line):
         """add_cue [cue_number] [cue_name]"""
-        parts = line.split(" ", 2)
+        parts = line.split(" ", 1)
         number = -1;
         name = "";
         if len(parts) >= 1:
@@ -37,6 +37,12 @@ class ShowLabClient(cmd.Cmd):
         print id
         d = client.getCue(id)
         print "Added cue", d.number, ":", d.name
+    
+    def do_get_cues(self, line):
+        """get_cues"""
+        cues = client.getCues()
+        for cue in cues:
+            print cue.number, ":", cue.name
     
     def do_EOF(self, line):
         print

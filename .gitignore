@@ -4,3 +4,4 @@
 *.o
 config.log
 showlab
+*.pyc

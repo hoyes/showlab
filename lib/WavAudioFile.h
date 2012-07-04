@@ -11,7 +11,7 @@ public:
         virtual ~WavAudioFile();
         virtual void doLoad();
         virtual void doUnload();
-        virtual void fillBuffer();
+        virtual void addToBuffer(SampleList samples, unsigned int number);
 
 private:
         SNDFILE* handler;

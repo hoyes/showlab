@@ -22,12 +22,12 @@ void AudioMixer::start()
         
         const PaDeviceInfo *deviceInfo = Pa_GetDeviceInfo(mId);
         mChannels = deviceInfo->maxOutputChannels;
-
+	if (mChannels > 8) mChannels = 8;
         mSampleRate = deviceInfo->defaultSampleRate;
         
         {
                 std::lock_guard<std::mutex> lk(mut_buffer);
-                buffer.set_capacity(mSampleRate * mChannels / 10);        
+                buffer.set_capacity(mSampleRate * mChannels / 4);
         }
         th = std::thread(&AudioMixer::diskThread, (void*) this);
 
@@ -110,7 +110,6 @@ void AudioMixer::diskThread(void* ptr)
                        SRC_STATE* src_state = src_new(SRC_SINC_BEST_QUALITY, (*i)->Channels(), &error);
                        SRC_DATA data;
                        double ratio = m->mSampleRate / (*i)->SampleRate();
-                       (*i)->fillBuffer();
                        unsigned int fnum = num / m->mChannels * (*i)->Channels();
                        auto samples = (*i)->getSamples(fnum * ratio);
 

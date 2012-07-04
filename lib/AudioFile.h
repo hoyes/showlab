@@ -6,15 +6,17 @@
 #include <boost/circular_buffer.hpp>
 #include <memory>
 
+class AudioFile;
 typedef std::shared_ptr<std::vector<float>> SampleList;
+typedef std::shared_ptr<AudioFile> AudioFileRef;
 
 class AudioFile {
 	
 public:
-        AudioFile();
-        virtual ~AudioFile();
-        void open(std::string fileName);
-        
+    AudioFile();
+    virtual ~AudioFile();
+    void open(std::string fileName);
+    
 	std::string FileName() { return mFileName; }
 	int Frames() { return mFrames; }
 	int Position() { return mPosition; }
@@ -24,11 +26,11 @@ public:
 
 	void load();
 	void unload();
-	virtual void fillBuffer() = 0;
+	virtual void addToBuffer(SampleList samples, unsigned int num) = 0;
 	SampleList getSamples(int number);
 	void clearSamples(int number);
 	
-	
+	static AudioFileRef create(std::string filename);
 
 protected:
 	virtual void doLoad() = 0;
@@ -38,8 +40,6 @@ protected:
 	void Channels(int v) { mChannels = v; }
 	void SampleRate(int v) { mSampleRate = v; }
 	
-        boost::circular_buffer<float> buffer;
-
 private:
 	std::string mFileName;
 	int mFrames;
@@ -50,7 +50,5 @@ private:
 	bool loaded;
 
 };
-
-typedef std::shared_ptr<AudioFile> AudioFileRef;
 
 #endif

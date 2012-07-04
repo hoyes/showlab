@@ -13,7 +13,6 @@ void AudioFile::open(std::string fileName)
 void AudioFile::load() {
         if (!loaded) {
                 doLoad();
-                buffer.set_capacity(SampleRate() * Channels() / 10);
                 loaded = true;
         }
 }
@@ -21,7 +20,6 @@ void AudioFile::load() {
 void AudioFile::unload() {
         if (loaded) {
                 doUnload();
-                buffer.resize(0);
                 loaded = false;
         }
 }
@@ -38,16 +36,11 @@ AudioFile::~AudioFile()
 
 SampleList AudioFile::getSamples(int number)
 {
-    int count = 0;
     auto samples = SampleList(new std::vector<float>); 
-    for (auto i = buffer.begin(); i != buffer.end() && count < number; ++i) {
-        samples->push_back(*i);
-        ++count;
-    }
+    addToBuffer(samples, number);
     return samples;
 }
 
 void AudioFile::clearSamples(int number)
 {
-    buffer.erase(buffer.begin(), buffer.begin() + number);
 }
