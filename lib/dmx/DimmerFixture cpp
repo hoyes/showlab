@@ -1,0 +1,6 @@
+#include "DimmerFixture.h"
+
+void DimmerFixture::SetDmxData(DmxState& state)
+{
+    state.SetDmx(GetUniverse(), GetStartChannel(), GetIntensity());
+}
