@@ -2,6 +2,7 @@
 #define AUDIO_LEVELS_H
 
 #include <vector>
+#include <memory>
 
 class AudioLevels
 {
@@ -26,5 +27,7 @@ public:
     
     void resize(int input_size, int output_size);
 };
+
+typedef shared_ptr<AudioLevels> AudioLevelsRef;
 
 #endif

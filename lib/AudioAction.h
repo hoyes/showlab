@@ -4,16 +4,19 @@
 #include "Action.h"
 #include "audio/AudioFile.h"
 #include "audio/AudioLevels.h"
+#include "audio/AudioManager.h"
 
 class AudioAction : public Action
 {
 private:
     std::string mFileName;
     AudioFileRef mAudioFile;
-    AudioLevels levels;    
+    AudioLevels levels;
+    
+    AudioManager mAudioMan;
     
 public:
-    AudioAction(EnvironmentRef e, std::string name = "", std::string filename = "");
+    AudioAction(AudioManager& man, std::string name = "", std::string filename = "");
     
     std::string FileName() { return mFileName; }
     void FileName(std::string v) { mFileName = v; }

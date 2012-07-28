@@ -44,6 +44,24 @@ class ShowLabClient(cmd.Cmd):
         for cue in cues:
             print cue.number, ":", cue.name
     
+    def do_go(self, line):
+        """go"""
+        client.go();
+
+    def do_reset(self, line):
+        """reset"""
+        client.reset();
+        
+    def do_standby(self, line):
+        """stanbdy [num]"""
+        client.standbyNum(float(line));
+    
+    def do_add_audio_action(self, line):
+        parts = line.split(" ", 1)
+        number = float(parts[0])
+        filename = parts[1]
+        client.addAudioActionByNumber(number, filename)
+        
     def do_EOF(self, line):
         print
         transport.close()

@@ -20,17 +20,20 @@ except:
 class CueData:
   """
   Attributes:
+   - uid
    - number
    - name
   """
 
   thrift_spec = (
     None, # 0
-    (1, TType.DOUBLE, 'number', None, None, ), # 1
-    (2, TType.STRING, 'name', None, None, ), # 2
+    (1, TType.STRING, 'uid', None, None, ), # 1
+    (2, TType.DOUBLE, 'number', None, None, ), # 2
+    (3, TType.STRING, 'name', None, None, ), # 3
   )
 
-  def __init__(self, number=None, name=None,):
+  def __init__(self, uid=None, number=None, name=None,):
+    self.uid = uid
     self.number = number
     self.name = name
 
@@ -44,11 +47,16 @@ class CueData:
       if ftype == TType.STOP:
         break
       if fid == 1:
+        if ftype == TType.STRING:
+          self.uid = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      elif fid == 2:
         if ftype == TType.DOUBLE:
           self.number = iprot.readDouble();
         else:
           iprot.skip(ftype)
-      elif fid == 2:
+      elif fid == 3:
         if ftype == TType.STRING:
           self.name = iprot.readString();
         else:
@@ -63,12 +71,16 @@ class CueData:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
     oprot.writeStructBegin('CueData')
+    if self.uid is not None:
+      oprot.writeFieldBegin('uid', TType.STRING, 1)
+      oprot.writeString(self.uid)
+      oprot.writeFieldEnd()
     if self.number is not None:
-      oprot.writeFieldBegin('number', TType.DOUBLE, 1)
+      oprot.writeFieldBegin('number', TType.DOUBLE, 2)
       oprot.writeDouble(self.number)
       oprot.writeFieldEnd()
     if self.name is not None:
-      oprot.writeFieldBegin('name', TType.STRING, 2)
+      oprot.writeFieldBegin('name', TType.STRING, 3)
       oprot.writeString(self.name)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()

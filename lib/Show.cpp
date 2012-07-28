@@ -5,63 +5,69 @@
 
 Show::Show() : mName("")
 {
-
+        next = cues.end();
 }
     
-int Show::addCueWithNumber(const double number, const std::string name)
+CueUid Show::addCueWithNumber(const double number, const std::string name)
 {
-        Cue c(number, name);
-        return addCue(c, -1);
+        CueRef c = CueRef(new Cue(number, name));
+        return addCue(c, cues.end());
 }
 
-int Show::addCueAtLocation(const int location, const std::string name)
+CueUid Show::addCueAtLocation(const int location, const std::string name)
 {
-        Cue c(location, name);
-        return addCue(c , -1);
+        CueRef c = CueRef(new Cue(location, name));
+        return addCue(c , cues.end());
 }
 
-int Show::addCue(Cue& c, int position)
+CueUid Show::addCue(CueRef c, CueList::iterator position)
 {
-        if (c.Number() <= 0) c.Number(suggestCueNumber(position));
+        if (c->Number() <= 0) c->Number(suggestCueNumber(position));
 
-        if (position == -1) {
-                auto it = cues.begin();
-                int pos = 0;
-                for (; it != cues.end(); it++) {
-                    if (it->Number() > c.Number()) break;
-                    pos++;
-                }
-                cues.insert(it, c);
-                return pos;
+        if (position == cues.end()) {
+                auto new_it = cues.insert(position, c);
+                cue_uid_lookup[c->Uid()] = new_it;
+                cue_num_lookup[c->Number()] = new_it;
         }
         else {
-                cues.insert(cues.begin() + position, c);
-                return position;
+                //cues.insert(cues.begin() + position, c);
         }
+        if (cues.size() == 1) reset();
+        return c->Uid();
 }
 
-double Show::suggestCueNumber(int position)
+CueRef Show::cue(CueUid uid)
 {
-        if (position == -1) {
+    return *(cue_uid_lookup[uid]);
+}
+
+CueRef Show::cue(float num)
+{
+    return *(cue_num_lookup[num]);
+}
+
+double Show::suggestCueNumber(CueList::iterator position)
+{
+        if (position == cues.end()) {
             if (cues.size() == 0) return 1.0;
-            position = cues.size();
         }
         
         double lower = -1, upper = -1, current;
         
         //Find previous cue that has numerical cue number
-        unsigned int i;
-        if (position > 0) {
-                for (i = position - 1; i >= 0; --i) {
-                        std::cout << i << std::endl;
-                    lower = cues[i].Number();
+        CueList::iterator it = position;
+        it--;
+        if (position != cues.begin()) {
+                do {
+                    lower = (*it)->Number();
                     break;
-                }
+                    it--;
+                } while (it != cues.begin());
         }
 
         //Find next cue that has numerical cue number
-        for (i = position; i < cues.size(); ++i) {
-            upper = cues[i].Number();
+        for (it = position; it != cues.end(); ++it) {
+            upper = (*it)->Number();
             break;
         }
 
@@ -86,4 +92,27 @@ int Show::findPosition(double number)
             if (number > 
         }*/
         return 0;
+}
+
+void Show::reset()
+{
+    if (cues.size() > 0) next = cues.begin();
+}
+
+void Show::go()
+{
+    if (next != cues.end()) {
+        (*next)->fire();
+        next++;
+    }
+}
+
+void Show::standby(float num)
+{
+        next = cue_num_lookup[num];
+}
+
+void Show::standby(CueUid uid)
+{
+        next = cue_uid_lookup[uid];
 }

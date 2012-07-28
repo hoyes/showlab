@@ -1,0 +1,2 @@
+thrift --gen cpp -out thrift/ thrift/interface.thrift
+thrift --gen py -out client/ thrift/interface.thrift

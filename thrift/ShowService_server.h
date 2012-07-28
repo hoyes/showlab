@@ -22,14 +22,23 @@ private:
  public:
   ShowServiceHandler(std::shared_ptr<Environment> e);
 
-  int32_t addCueWithNumber(const double number, const std::string& name);
-  int32_t addCueAtLocation(const int32_t location, const std::string& name);
+  void addCueWithNumber(std::string& _return, const double number, const std::string& name);
+  void addCueAtLocation(std::string& _return, const std::string& location, const std::string& name);
   void getCues(std::vector<CueData> & _return);
-  void getCue(CueData& _return, const int32_t id);
+  void getCue(CueData& _return, const std::string& id);
   void deleteCue(const int32_t id);
   void changeNumber(const int32_t id, const double number);
   void changeName(const int32_t id, const std::string& name);
   void newShow();
+  
+  void addAudioActionById(const std::string& cueid, const std::string& filename);
+  void addAudioActionByNumber(const int32_t num, const std::string& filename);
+  
+  void go();
+  void reset();
+  void standbyUid(const std::string& id);
+
+  void standbyNum(const double number);
 
 };
 

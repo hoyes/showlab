@@ -67,7 +67,43 @@ class Iface:
     """
     pass
 
+  def addAudioActionById(self, cueid, filename):
+    """
+    Parameters:
+     - cueid
+     - filename
+    """
+    pass
+
+  def addAudioActionByNumber(self, num, filename):
+    """
+    Parameters:
+     - num
+     - filename
+    """
+    pass
+
   def newShow(self, ):
+    pass
+
+  def reset(self, ):
+    pass
+
+  def go(self, ):
+    pass
+
+  def standbyUid(self, id):
+    """
+    Parameters:
+     - id
+    """
+    pass
+
+  def standbyNum(self, number):
+    """
+    Parameters:
+     - number
+    """
     pass
 
 
@@ -285,6 +321,66 @@ class Client(Iface):
     self._iprot.readMessageEnd()
     return
 
+  def addAudioActionById(self, cueid, filename):
+    """
+    Parameters:
+     - cueid
+     - filename
+    """
+    self.send_addAudioActionById(cueid, filename)
+    self.recv_addAudioActionById()
+
+  def send_addAudioActionById(self, cueid, filename):
+    self._oprot.writeMessageBegin('addAudioActionById', TMessageType.CALL, self._seqid)
+    args = addAudioActionById_args()
+    args.cueid = cueid
+    args.filename = filename
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_addAudioActionById(self, ):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = addAudioActionById_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    return
+
+  def addAudioActionByNumber(self, num, filename):
+    """
+    Parameters:
+     - num
+     - filename
+    """
+    self.send_addAudioActionByNumber(num, filename)
+    self.recv_addAudioActionByNumber()
+
+  def send_addAudioActionByNumber(self, num, filename):
+    self._oprot.writeMessageBegin('addAudioActionByNumber', TMessageType.CALL, self._seqid)
+    args = addAudioActionByNumber_args()
+    args.num = num
+    args.filename = filename
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_addAudioActionByNumber(self, ):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = addAudioActionByNumber_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    return
+
   def newShow(self, ):
     self.send_newShow()
     self.recv_newShow()
@@ -308,6 +404,108 @@ class Client(Iface):
     self._iprot.readMessageEnd()
     return
 
+  def reset(self, ):
+    self.send_reset()
+    self.recv_reset()
+
+  def send_reset(self, ):
+    self._oprot.writeMessageBegin('reset', TMessageType.CALL, self._seqid)
+    args = reset_args()
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_reset(self, ):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = reset_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    return
+
+  def go(self, ):
+    self.send_go()
+    self.recv_go()
+
+  def send_go(self, ):
+    self._oprot.writeMessageBegin('go', TMessageType.CALL, self._seqid)
+    args = go_args()
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_go(self, ):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = go_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    return
+
+  def standbyUid(self, id):
+    """
+    Parameters:
+     - id
+    """
+    self.send_standbyUid(id)
+    self.recv_standbyUid()
+
+  def send_standbyUid(self, id):
+    self._oprot.writeMessageBegin('standbyUid', TMessageType.CALL, self._seqid)
+    args = standbyUid_args()
+    args.id = id
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_standbyUid(self, ):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = standbyUid_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    return
+
+  def standbyNum(self, number):
+    """
+    Parameters:
+     - number
+    """
+    self.send_standbyNum(number)
+    self.recv_standbyNum()
+
+  def send_standbyNum(self, number):
+    self._oprot.writeMessageBegin('standbyNum', TMessageType.CALL, self._seqid)
+    args = standbyNum_args()
+    args.number = number
+    args.write(self._oprot)
+    self._oprot.writeMessageEnd()
+    self._oprot.trans.flush()
+
+  def recv_standbyNum(self, ):
+    (fname, mtype, rseqid) = self._iprot.readMessageBegin()
+    if mtype == TMessageType.EXCEPTION:
+      x = TApplicationException()
+      x.read(self._iprot)
+      self._iprot.readMessageEnd()
+      raise x
+    result = standbyNum_result()
+    result.read(self._iprot)
+    self._iprot.readMessageEnd()
+    return
+
 
 class Processor(Iface, TProcessor):
   def __init__(self, handler):
@@ -320,7 +518,13 @@ class Processor(Iface, TProcessor):
     self._processMap["deleteCue"] = Processor.process_deleteCue
     self._processMap["changeNumber"] = Processor.process_changeNumber
     self._processMap["changeName"] = Processor.process_changeName
+    self._processMap["addAudioActionById"] = Processor.process_addAudioActionById
+    self._processMap["addAudioActionByNumber"] = Processor.process_addAudioActionByNumber
     self._processMap["newShow"] = Processor.process_newShow
+    self._processMap["reset"] = Processor.process_reset
+    self._processMap["go"] = Processor.process_go
+    self._processMap["standbyUid"] = Processor.process_standbyUid
+    self._processMap["standbyNum"] = Processor.process_standbyNum
 
   def process(self, iprot, oprot):
     (name, type, seqid) = iprot.readMessageBegin()
@@ -414,6 +618,28 @@ class Processor(Iface, TProcessor):
     oprot.writeMessageEnd()
     oprot.trans.flush()
 
+  def process_addAudioActionById(self, seqid, iprot, oprot):
+    args = addAudioActionById_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = addAudioActionById_result()
+    self._handler.addAudioActionById(args.cueid, args.filename)
+    oprot.writeMessageBegin("addAudioActionById", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
+  def process_addAudioActionByNumber(self, seqid, iprot, oprot):
+    args = addAudioActionByNumber_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = addAudioActionByNumber_result()
+    self._handler.addAudioActionByNumber(args.num, args.filename)
+    oprot.writeMessageBegin("addAudioActionByNumber", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
   def process_newShow(self, seqid, iprot, oprot):
     args = newShow_args()
     args.read(iprot)
@@ -421,6 +647,50 @@ class Processor(Iface, TProcessor):
     result = newShow_result()
     self._handler.newShow()
     oprot.writeMessageBegin("newShow", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
+  def process_reset(self, seqid, iprot, oprot):
+    args = reset_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = reset_result()
+    self._handler.reset()
+    oprot.writeMessageBegin("reset", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
+  def process_go(self, seqid, iprot, oprot):
+    args = go_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = go_result()
+    self._handler.go()
+    oprot.writeMessageBegin("go", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
+  def process_standbyUid(self, seqid, iprot, oprot):
+    args = standbyUid_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = standbyUid_result()
+    self._handler.standbyUid(args.id)
+    oprot.writeMessageBegin("standbyUid", TMessageType.REPLY, seqid)
+    result.write(oprot)
+    oprot.writeMessageEnd()
+    oprot.trans.flush()
+
+  def process_standbyNum(self, seqid, iprot, oprot):
+    args = standbyNum_args()
+    args.read(iprot)
+    iprot.readMessageEnd()
+    result = standbyNum_result()
+    self._handler.standbyNum(args.number)
+    oprot.writeMessageBegin("standbyNum", TMessageType.REPLY, seqid)
     result.write(oprot)
     oprot.writeMessageEnd()
     oprot.trans.flush()
@@ -507,7 +777,7 @@ class addCueWithNumber_result:
   """
 
   thrift_spec = (
-    (0, TType.I32, 'success', None, None, ), # 0
+    (0, TType.STRING, 'success', None, None, ), # 0
   )
 
   def __init__(self, success=None,):
@@ -523,8 +793,8 @@ class addCueWithNumber_result:
       if ftype == TType.STOP:
         break
       if fid == 0:
-        if ftype == TType.I32:
-          self.success = iprot.readI32();
+        if ftype == TType.STRING:
+          self.success = iprot.readString();
         else:
           iprot.skip(ftype)
       else:
@@ -538,8 +808,8 @@ class addCueWithNumber_result:
       return
     oprot.writeStructBegin('addCueWithNumber_result')
     if self.success is not None:
-      oprot.writeFieldBegin('success', TType.I32, 0)
-      oprot.writeI32(self.success)
+      oprot.writeFieldBegin('success', TType.STRING, 0)
+      oprot.writeString(self.success)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
     oprot.writeStructEnd()
@@ -568,7 +838,7 @@ class addCueAtLocation_args:
 
   thrift_spec = (
     None, # 0
-    (1, TType.I32, 'location', None, None, ), # 1
+    (1, TType.STRING, 'location', None, None, ), # 1
     (2, TType.STRING, 'name', None, None, ), # 2
   )
 
@@ -586,8 +856,8 @@ class addCueAtLocation_args:
       if ftype == TType.STOP:
         break
       if fid == 1:
-        if ftype == TType.I32:
-          self.location = iprot.readI32();
+        if ftype == TType.STRING:
+          self.location = iprot.readString();
         else:
           iprot.skip(ftype)
       elif fid == 2:
@@ -606,8 +876,8 @@ class addCueAtLocation_args:
       return
     oprot.writeStructBegin('addCueAtLocation_args')
     if self.location is not None:
-      oprot.writeFieldBegin('location', TType.I32, 1)
-      oprot.writeI32(self.location)
+      oprot.writeFieldBegin('location', TType.STRING, 1)
+      oprot.writeString(self.location)
       oprot.writeFieldEnd()
     if self.name is not None:
       oprot.writeFieldBegin('name', TType.STRING, 2)
@@ -638,7 +908,7 @@ class addCueAtLocation_result:
   """
 
   thrift_spec = (
-    (0, TType.I32, 'success', None, None, ), # 0
+    (0, TType.STRING, 'success', None, None, ), # 0
   )
 
   def __init__(self, success=None,):
@@ -654,8 +924,8 @@ class addCueAtLocation_result:
       if ftype == TType.STOP:
         break
       if fid == 0:
-        if ftype == TType.I32:
-          self.success = iprot.readI32();
+        if ftype == TType.STRING:
+          self.success = iprot.readString();
         else:
           iprot.skip(ftype)
       else:
@@ -669,8 +939,8 @@ class addCueAtLocation_result:
       return
     oprot.writeStructBegin('addCueAtLocation_result')
     if self.success is not None:
-      oprot.writeFieldBegin('success', TType.I32, 0)
-      oprot.writeI32(self.success)
+      oprot.writeFieldBegin('success', TType.STRING, 0)
+      oprot.writeString(self.success)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
     oprot.writeStructEnd()
@@ -808,7 +1078,7 @@ class getCue_args:
 
   thrift_spec = (
     None, # 0
-    (1, TType.I32, 'id', None, None, ), # 1
+    (1, TType.STRING, 'id', None, None, ), # 1
   )
 
   def __init__(self, id=None,):
@@ -824,8 +1094,8 @@ class getCue_args:
       if ftype == TType.STOP:
         break
       if fid == 1:
-        if ftype == TType.I32:
-          self.id = iprot.readI32();
+        if ftype == TType.STRING:
+          self.id = iprot.readString();
         else:
           iprot.skip(ftype)
       else:
@@ -839,8 +1109,8 @@ class getCue_args:
       return
     oprot.writeStructBegin('getCue_args')
     if self.id is not None:
-      oprot.writeFieldBegin('id', TType.I32, 1)
-      oprot.writeI32(self.id)
+      oprot.writeFieldBegin('id', TType.STRING, 1)
+      oprot.writeString(self.id)
       oprot.writeFieldEnd()
     oprot.writeFieldStop()
     oprot.writeStructEnd()
@@ -1250,6 +1520,234 @@ class changeName_result:
   def __ne__(self, other):
     return not (self == other)
 
+class addAudioActionById_args:
+  """
+  Attributes:
+   - cueid
+   - filename
+  """
+
+  thrift_spec = (
+    None, # 0
+    (1, TType.STRING, 'cueid', None, None, ), # 1
+    (2, TType.STRING, 'filename', None, None, ), # 2
+  )
+
+  def __init__(self, cueid=None, filename=None,):
+    self.cueid = cueid
+    self.filename = filename
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 1:
+        if ftype == TType.STRING:
+          self.cueid = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      elif fid == 2:
+        if ftype == TType.STRING:
+          self.filename = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('addAudioActionById_args')
+    if self.cueid is not None:
+      oprot.writeFieldBegin('cueid', TType.STRING, 1)
+      oprot.writeString(self.cueid)
+      oprot.writeFieldEnd()
+    if self.filename is not None:
+      oprot.writeFieldBegin('filename', TType.STRING, 2)
+      oprot.writeString(self.filename)
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class addAudioActionById_result:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('addAudioActionById_result')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class addAudioActionByNumber_args:
+  """
+  Attributes:
+   - num
+   - filename
+  """
+
+  thrift_spec = (
+    None, # 0
+    (1, TType.I32, 'num', None, None, ), # 1
+    (2, TType.STRING, 'filename', None, None, ), # 2
+  )
+
+  def __init__(self, num=None, filename=None,):
+    self.num = num
+    self.filename = filename
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 1:
+        if ftype == TType.I32:
+          self.num = iprot.readI32();
+        else:
+          iprot.skip(ftype)
+      elif fid == 2:
+        if ftype == TType.STRING:
+          self.filename = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('addAudioActionByNumber_args')
+    if self.num is not None:
+      oprot.writeFieldBegin('num', TType.I32, 1)
+      oprot.writeI32(self.num)
+      oprot.writeFieldEnd()
+    if self.filename is not None:
+      oprot.writeFieldBegin('filename', TType.STRING, 2)
+      oprot.writeString(self.filename)
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class addAudioActionByNumber_result:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('addAudioActionByNumber_result')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
 class newShow_args:
 
   thrift_spec = (
@@ -1316,6 +1814,378 @@ class newShow_result:
       oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
       return
     oprot.writeStructBegin('newShow_result')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class reset_args:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('reset_args')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class reset_result:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('reset_result')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class go_args:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('go_args')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class go_result:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('go_result')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class standbyUid_args:
+  """
+  Attributes:
+   - id
+  """
+
+  thrift_spec = (
+    None, # 0
+    (1, TType.STRING, 'id', None, None, ), # 1
+  )
+
+  def __init__(self, id=None,):
+    self.id = id
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 1:
+        if ftype == TType.STRING:
+          self.id = iprot.readString();
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('standbyUid_args')
+    if self.id is not None:
+      oprot.writeFieldBegin('id', TType.STRING, 1)
+      oprot.writeString(self.id)
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class standbyUid_result:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('standbyUid_result')
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class standbyNum_args:
+  """
+  Attributes:
+   - number
+  """
+
+  thrift_spec = (
+    None, # 0
+    (1, TType.DOUBLE, 'number', None, None, ), # 1
+  )
+
+  def __init__(self, number=None,):
+    self.number = number
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      if fid == 1:
+        if ftype == TType.DOUBLE:
+          self.number = iprot.readDouble();
+        else:
+          iprot.skip(ftype)
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('standbyNum_args')
+    if self.number is not None:
+      oprot.writeFieldBegin('number', TType.DOUBLE, 1)
+      oprot.writeDouble(self.number)
+      oprot.writeFieldEnd()
+    oprot.writeFieldStop()
+    oprot.writeStructEnd()
+
+  def validate(self):
+    return
+
+
+  def __repr__(self):
+    L = ['%s=%r' % (key, value)
+      for key, value in self.__dict__.iteritems()]
+    return '%s(%s)' % (self.__class__.__name__, ', '.join(L))
+
+  def __eq__(self, other):
+    return isinstance(other, self.__class__) and self.__dict__ == other.__dict__
+
+  def __ne__(self, other):
+    return not (self == other)
+
+class standbyNum_result:
+
+  thrift_spec = (
+  )
+
+  def read(self, iprot):
+    if iprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and isinstance(iprot.trans, TTransport.CReadableTransport) and self.thrift_spec is not None and fastbinary is not None:
+      fastbinary.decode_binary(self, iprot.trans, (self.__class__, self.thrift_spec))
+      return
+    iprot.readStructBegin()
+    while True:
+      (fname, ftype, fid) = iprot.readFieldBegin()
+      if ftype == TType.STOP:
+        break
+      else:
+        iprot.skip(ftype)
+      iprot.readFieldEnd()
+    iprot.readStructEnd()
+
+  def write(self, oprot):
+    if oprot.__class__ == TBinaryProtocol.TBinaryProtocolAccelerated and self.thrift_spec is not None and fastbinary is not None:
+      oprot.trans.write(fastbinary.encode_binary(self, (self.__class__, self.thrift_spec)))
+      return
+    oprot.writeStructBegin('standbyNum_result')
     oprot.writeFieldStop()
     oprot.writeStructEnd()
 

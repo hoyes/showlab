@@ -8,8 +8,8 @@
 
 
 
-const char* CueData::ascii_fingerprint = "DD2684E5F49042C4C07B5348ECFFFD06";
-const uint8_t CueData::binary_fingerprint[16] = {0xDD,0x26,0x84,0xE5,0xF4,0x90,0x42,0xC4,0xC0,0x7B,0x53,0x48,0xEC,0xFF,0xFD,0x06};
+const char* CueData::ascii_fingerprint = "E0B9A2019B35873F5E3903C86979C4DE";
+const uint8_t CueData::binary_fingerprint[16] = {0xE0,0xB9,0xA2,0x01,0x9B,0x35,0x87,0x3F,0x5E,0x39,0x03,0xC8,0x69,0x79,0xC4,0xDE};
 
 uint32_t CueData::read(::apache::thrift::protocol::TProtocol* iprot) {
 
@@ -32,6 +32,14 @@ uint32_t CueData::read(::apache::thrift::protocol::TProtocol* iprot) {
     switch (fid)
     {
       case 1:
+        if (ftype == ::apache::thrift::protocol::T_STRING) {
+          xfer += iprot->readString(this->uid);
+          this->__isset.uid = true;
+        } else {
+          xfer += iprot->skip(ftype);
+        }
+        break;
+      case 2:
         if (ftype == ::apache::thrift::protocol::T_DOUBLE) {
           xfer += iprot->readDouble(this->number);
           this->__isset.number = true;
@@ -39,7 +47,7 @@ uint32_t CueData::read(::apache::thrift::protocol::TProtocol* iprot) {
           xfer += iprot->skip(ftype);
         }
         break;
-      case 2:
+      case 3:
         if (ftype == ::apache::thrift::protocol::T_STRING) {
           xfer += iprot->readString(this->name);
           this->__isset.name = true;
@@ -62,10 +70,13 @@ uint32_t CueData::read(::apache::thrift::protocol::TProtocol* iprot) {
 uint32_t CueData::write(::apache::thrift::protocol::TProtocol* oprot) const {
   uint32_t xfer = 0;
   xfer += oprot->writeStructBegin("CueData");
-  xfer += oprot->writeFieldBegin("number", ::apache::thrift::protocol::T_DOUBLE, 1);
+  xfer += oprot->writeFieldBegin("uid", ::apache::thrift::protocol::T_STRING, 1);
+  xfer += oprot->writeString(this->uid);
+  xfer += oprot->writeFieldEnd();
+  xfer += oprot->writeFieldBegin("number", ::apache::thrift::protocol::T_DOUBLE, 2);
   xfer += oprot->writeDouble(this->number);
   xfer += oprot->writeFieldEnd();
-  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 2);
+  xfer += oprot->writeFieldBegin("name", ::apache::thrift::protocol::T_STRING, 3);
   xfer += oprot->writeString(this->name);
   xfer += oprot->writeFieldEnd();
   xfer += oprot->writeFieldStop();

@@ -4,7 +4,6 @@
 #include <string>
 #include <memory>
 #include <thread>
-#include "Environment.h"
 
 class Action;
 typedef std::shared_ptr<Action> ActionRef;
@@ -26,10 +25,10 @@ private:
     ActionRef mRelAction;
     
     std::thread th;
-    EnvironmentRef env;
-    
+    bool mRunning;
+
 public:
-    Action(EnvironmentRef e, std::string name = "");
+    Action(std::string name = "");
     
     std::string Name() { return mName; }
     void Name(std::string v) { mName = v; }
