@@ -1,0 +1,18 @@
+import sys,os
+
+env = Environment()
+
+sources = Glob("*.cpp")
+object_list = env.Object(source = sources)
+
+env.SharedLibrary(target='showstore', source=sources)
+env.Append(LIBS = ['boost_system', 'boost_filesystem','boost_regex','yaml-cpp'])
+env.Append(CCFLAGS = ['-Wall','-std=c++0x', '-g'])
+
+env2 = Environment()
+sources2 = Glob("test/*.cpp")
+env2.Program(target='simpleshowstore', source=sources2)
+env2.Append(CCFLAGS = ['-Wall','-std=c++0x', '-g'])
+env2.Append(LIBS = ['showstore', 'boost_system'])
+env2.Append(CPPPATH = '.')
+env2.Append(LIBPATH = '.')

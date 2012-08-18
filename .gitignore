@@ -2,6 +2,10 @@
 .sconsign.dblite
 *~
 *.o
+*.os
+*.so
 config.log
 showlab
 *.pyc
+simpleshowstore
+uuidgen
