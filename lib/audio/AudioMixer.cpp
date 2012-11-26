@@ -105,6 +105,7 @@ void AudioMixer::diskThread(void* ptr)
                     std::vector<float> totals;
                     totals.assign(num, 0);
                     int numframes = 0;
+                    //std::cout << m->audioFiles.size() << std::endl;
                     for (auto i = m->audioFiles.begin(); i != m->audioFiles.end(); ++i) {
                        int error;
                        SRC_STATE* src_state = src_new(SRC_SINC_BEST_QUALITY, (*i)->Channels(), &error);
@@ -142,6 +143,7 @@ void AudioMixer::diskThread(void* ptr)
                        
                        if (samples->size() < fnum) {
                                 //We've reached the end of the file so delete it from mixer
+                                (*i)->unload();
                                 i = m->audioFiles.erase(i) - 1;
                        }
                     }
@@ -156,7 +158,7 @@ void AudioMixer::diskThread(void* ptr)
         }
 }
 
-void AudioMixer::addFile(AudioFileRef file)
+void AudioMixer::addFile(AudioFileRef file, AudioLevelsRef levels)
 {
         if (file->SampleRate() < 1000 || file->SampleRate() > 200000) return;
 

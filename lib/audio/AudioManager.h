@@ -33,7 +33,11 @@ public:
         Device getDeviceByName(std::string name);
         
         AudioMixerRef addMixer(std::string name);
+        AudioMixerRef getMixer(int index);
+        unsigned int getMixerCount();
 
 };
+
+typedef std::shared_ptr<AudioManager> AudioManagerRef;
 
 #endif

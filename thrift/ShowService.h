@@ -15,14 +15,20 @@
 class ShowServiceIf {
  public:
   virtual ~ShowServiceIf() {}
-  virtual int32_t addCueWithNumber(const double number, const std::string& name) = 0;
-  virtual int32_t addCueAtLocation(const int32_t location, const std::string& name) = 0;
+  virtual void addCueWithNumber(std::string& _return, const double number, const std::string& name) = 0;
+  virtual void addCueAtLocation(std::string& _return, const std::string& location, const std::string& name) = 0;
   virtual void getCues(std::vector<CueData> & _return) = 0;
-  virtual void getCue(CueData& _return, const int32_t id) = 0;
+  virtual void getCue(CueData& _return, const std::string& id) = 0;
   virtual void deleteCue(const int32_t id) = 0;
   virtual void changeNumber(const int32_t id, const double number) = 0;
   virtual void changeName(const int32_t id, const std::string& name) = 0;
+  virtual void addAudioActionById(const std::string& cueid, const std::string& filename) = 0;
+  virtual void addAudioActionByNumber(const int32_t num, const std::string& filename) = 0;
   virtual void newShow() = 0;
+  virtual void reset() = 0;
+  virtual void go() = 0;
+  virtual void standbyUid(const std::string& id) = 0;
+  virtual void standbyNum(const double number) = 0;
 };
 
 class ShowServiceIfFactory {
@@ -52,18 +58,16 @@ class ShowServiceIfSingletonFactory : virtual public ShowServiceIfFactory {
 class ShowServiceNull : virtual public ShowServiceIf {
  public:
   virtual ~ShowServiceNull() {}
-  int32_t addCueWithNumber(const double /* number */, const std::string& /* name */) {
-    int32_t _return = 0;
-    return _return;
+  void addCueWithNumber(std::string& /* _return */, const double /* number */, const std::string& /* name */) {
+    return;
   }
-  int32_t addCueAtLocation(const int32_t /* location */, const std::string& /* name */) {
-    int32_t _return = 0;
-    return _return;
+  void addCueAtLocation(std::string& /* _return */, const std::string& /* location */, const std::string& /* name */) {
+    return;
   }
   void getCues(std::vector<CueData> & /* _return */) {
     return;
   }
-  void getCue(CueData& /* _return */, const int32_t /* id */) {
+  void getCue(CueData& /* _return */, const std::string& /* id */) {
     return;
   }
   void deleteCue(const int32_t /* id */) {
@@ -75,7 +79,25 @@ class ShowServiceNull : virtual public ShowServiceIf {
   void changeName(const int32_t /* id */, const std::string& /* name */) {
     return;
   }
+  void addAudioActionById(const std::string& /* cueid */, const std::string& /* filename */) {
+    return;
+  }
+  void addAudioActionByNumber(const int32_t /* num */, const std::string& /* filename */) {
+    return;
+  }
   void newShow() {
+    return;
+  }
+  void reset() {
+    return;
+  }
+  void go() {
+    return;
+  }
+  void standbyUid(const std::string& /* id */) {
+    return;
+  }
+  void standbyNum(const double /* number */) {
     return;
   }
 };
@@ -148,16 +170,16 @@ typedef struct _ShowService_addCueWithNumber_result__isset {
 class ShowService_addCueWithNumber_result {
  public:
 
-  ShowService_addCueWithNumber_result() : success(0) {
+  ShowService_addCueWithNumber_result() : success("") {
   }
 
   virtual ~ShowService_addCueWithNumber_result() throw() {}
 
-  int32_t success;
+  std::string success;
 
   _ShowService_addCueWithNumber_result__isset __isset;
 
-  void __set_success(const int32_t val) {
+  void __set_success(const std::string& val) {
     success = val;
   }
 
@@ -189,7 +211,7 @@ class ShowService_addCueWithNumber_presult {
 
   virtual ~ShowService_addCueWithNumber_presult() throw() {}
 
-  int32_t* success;
+  std::string* success;
 
   _ShowService_addCueWithNumber_presult__isset __isset;
 
@@ -206,17 +228,17 @@ typedef struct _ShowService_addCueAtLocation_args__isset {
 class ShowService_addCueAtLocation_args {
  public:
 
-  ShowService_addCueAtLocation_args() : location(0), name("") {
+  ShowService_addCueAtLocation_args() : location(""), name("") {
   }
 
   virtual ~ShowService_addCueAtLocation_args() throw() {}
 
-  int32_t location;
+  std::string location;
   std::string name;
 
   _ShowService_addCueAtLocation_args__isset __isset;
 
-  void __set_location(const int32_t val) {
+  void __set_location(const std::string& val) {
     location = val;
   }
 
@@ -250,7 +272,7 @@ class ShowService_addCueAtLocation_pargs {
 
   virtual ~ShowService_addCueAtLocation_pargs() throw() {}
 
-  const int32_t* location;
+  const std::string* location;
   const std::string* name;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
@@ -265,16 +287,16 @@ typedef struct _ShowService_addCueAtLocation_result__isset {
 class ShowService_addCueAtLocation_result {
  public:
 
-  ShowService_addCueAtLocation_result() : success(0) {
+  ShowService_addCueAtLocation_result() : success("") {
   }
 
   virtual ~ShowService_addCueAtLocation_result() throw() {}
 
-  int32_t success;
+  std::string success;
 
   _ShowService_addCueAtLocation_result__isset __isset;
 
-  void __set_success(const int32_t val) {
+  void __set_success(const std::string& val) {
     success = val;
   }
 
@@ -306,7 +328,7 @@ class ShowService_addCueAtLocation_presult {
 
   virtual ~ShowService_addCueAtLocation_presult() throw() {}
 
-  int32_t* success;
+  std::string* success;
 
   _ShowService_addCueAtLocation_presult__isset __isset;
 
@@ -416,16 +438,16 @@ typedef struct _ShowService_getCue_args__isset {
 class ShowService_getCue_args {
  public:
 
-  ShowService_getCue_args() : id(0) {
+  ShowService_getCue_args() : id("") {
   }
 
   virtual ~ShowService_getCue_args() throw() {}
 
-  int32_t id;
+  std::string id;
 
   _ShowService_getCue_args__isset __isset;
 
-  void __set_id(const int32_t val) {
+  void __set_id(const std::string& val) {
     id = val;
   }
 
@@ -453,7 +475,7 @@ class ShowService_getCue_pargs {
 
   virtual ~ShowService_getCue_pargs() throw() {}
 
-  const int32_t* id;
+  const std::string* id;
 
   uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
 
@@ -798,6 +820,200 @@ class ShowService_changeName_presult {
 
 };
 
+typedef struct _ShowService_addAudioActionById_args__isset {
+  _ShowService_addAudioActionById_args__isset() : cueid(false), filename(false) {}
+  bool cueid;
+  bool filename;
+} _ShowService_addAudioActionById_args__isset;
+
+class ShowService_addAudioActionById_args {
+ public:
+
+  ShowService_addAudioActionById_args() : cueid(""), filename("") {
+  }
+
+  virtual ~ShowService_addAudioActionById_args() throw() {}
+
+  std::string cueid;
+  std::string filename;
+
+  _ShowService_addAudioActionById_args__isset __isset;
+
+  void __set_cueid(const std::string& val) {
+    cueid = val;
+  }
+
+  void __set_filename(const std::string& val) {
+    filename = val;
+  }
+
+  bool operator == (const ShowService_addAudioActionById_args & rhs) const
+  {
+    if (!(cueid == rhs.cueid))
+      return false;
+    if (!(filename == rhs.filename))
+      return false;
+    return true;
+  }
+  bool operator != (const ShowService_addAudioActionById_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_addAudioActionById_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_addAudioActionById_pargs {
+ public:
+
+
+  virtual ~ShowService_addAudioActionById_pargs() throw() {}
+
+  const std::string* cueid;
+  const std::string* filename;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_addAudioActionById_result {
+ public:
+
+  ShowService_addAudioActionById_result() {
+  }
+
+  virtual ~ShowService_addAudioActionById_result() throw() {}
+
+
+  bool operator == (const ShowService_addAudioActionById_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_addAudioActionById_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_addAudioActionById_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_addAudioActionById_presult {
+ public:
+
+
+  virtual ~ShowService_addAudioActionById_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _ShowService_addAudioActionByNumber_args__isset {
+  _ShowService_addAudioActionByNumber_args__isset() : num(false), filename(false) {}
+  bool num;
+  bool filename;
+} _ShowService_addAudioActionByNumber_args__isset;
+
+class ShowService_addAudioActionByNumber_args {
+ public:
+
+  ShowService_addAudioActionByNumber_args() : num(0), filename("") {
+  }
+
+  virtual ~ShowService_addAudioActionByNumber_args() throw() {}
+
+  int32_t num;
+  std::string filename;
+
+  _ShowService_addAudioActionByNumber_args__isset __isset;
+
+  void __set_num(const int32_t val) {
+    num = val;
+  }
+
+  void __set_filename(const std::string& val) {
+    filename = val;
+  }
+
+  bool operator == (const ShowService_addAudioActionByNumber_args & rhs) const
+  {
+    if (!(num == rhs.num))
+      return false;
+    if (!(filename == rhs.filename))
+      return false;
+    return true;
+  }
+  bool operator != (const ShowService_addAudioActionByNumber_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_addAudioActionByNumber_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_addAudioActionByNumber_pargs {
+ public:
+
+
+  virtual ~ShowService_addAudioActionByNumber_pargs() throw() {}
+
+  const int32_t* num;
+  const std::string* filename;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_addAudioActionByNumber_result {
+ public:
+
+  ShowService_addAudioActionByNumber_result() {
+  }
+
+  virtual ~ShowService_addAudioActionByNumber_result() throw() {}
+
+
+  bool operator == (const ShowService_addAudioActionByNumber_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_addAudioActionByNumber_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_addAudioActionByNumber_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_addAudioActionByNumber_presult {
+ public:
+
+
+  virtual ~ShowService_addAudioActionByNumber_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 
 class ShowService_newShow_args {
  public:
@@ -872,6 +1088,330 @@ class ShowService_newShow_presult {
 
 };
 
+
+class ShowService_reset_args {
+ public:
+
+  ShowService_reset_args() {
+  }
+
+  virtual ~ShowService_reset_args() throw() {}
+
+
+  bool operator == (const ShowService_reset_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_reset_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_reset_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_reset_pargs {
+ public:
+
+
+  virtual ~ShowService_reset_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_reset_result {
+ public:
+
+  ShowService_reset_result() {
+  }
+
+  virtual ~ShowService_reset_result() throw() {}
+
+
+  bool operator == (const ShowService_reset_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_reset_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_reset_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_reset_presult {
+ public:
+
+
+  virtual ~ShowService_reset_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+
+class ShowService_go_args {
+ public:
+
+  ShowService_go_args() {
+  }
+
+  virtual ~ShowService_go_args() throw() {}
+
+
+  bool operator == (const ShowService_go_args & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_go_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_go_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_go_pargs {
+ public:
+
+
+  virtual ~ShowService_go_pargs() throw() {}
+
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_go_result {
+ public:
+
+  ShowService_go_result() {
+  }
+
+  virtual ~ShowService_go_result() throw() {}
+
+
+  bool operator == (const ShowService_go_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_go_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_go_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_go_presult {
+ public:
+
+
+  virtual ~ShowService_go_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _ShowService_standbyUid_args__isset {
+  _ShowService_standbyUid_args__isset() : id(false) {}
+  bool id;
+} _ShowService_standbyUid_args__isset;
+
+class ShowService_standbyUid_args {
+ public:
+
+  ShowService_standbyUid_args() : id("") {
+  }
+
+  virtual ~ShowService_standbyUid_args() throw() {}
+
+  std::string id;
+
+  _ShowService_standbyUid_args__isset __isset;
+
+  void __set_id(const std::string& val) {
+    id = val;
+  }
+
+  bool operator == (const ShowService_standbyUid_args & rhs) const
+  {
+    if (!(id == rhs.id))
+      return false;
+    return true;
+  }
+  bool operator != (const ShowService_standbyUid_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_standbyUid_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_standbyUid_pargs {
+ public:
+
+
+  virtual ~ShowService_standbyUid_pargs() throw() {}
+
+  const std::string* id;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_standbyUid_result {
+ public:
+
+  ShowService_standbyUid_result() {
+  }
+
+  virtual ~ShowService_standbyUid_result() throw() {}
+
+
+  bool operator == (const ShowService_standbyUid_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_standbyUid_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_standbyUid_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_standbyUid_presult {
+ public:
+
+
+  virtual ~ShowService_standbyUid_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
+typedef struct _ShowService_standbyNum_args__isset {
+  _ShowService_standbyNum_args__isset() : number(false) {}
+  bool number;
+} _ShowService_standbyNum_args__isset;
+
+class ShowService_standbyNum_args {
+ public:
+
+  ShowService_standbyNum_args() : number(0) {
+  }
+
+  virtual ~ShowService_standbyNum_args() throw() {}
+
+  double number;
+
+  _ShowService_standbyNum_args__isset __isset;
+
+  void __set_number(const double val) {
+    number = val;
+  }
+
+  bool operator == (const ShowService_standbyNum_args & rhs) const
+  {
+    if (!(number == rhs.number))
+      return false;
+    return true;
+  }
+  bool operator != (const ShowService_standbyNum_args &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_standbyNum_args & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_standbyNum_pargs {
+ public:
+
+
+  virtual ~ShowService_standbyNum_pargs() throw() {}
+
+  const double* number;
+
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_standbyNum_result {
+ public:
+
+  ShowService_standbyNum_result() {
+  }
+
+  virtual ~ShowService_standbyNum_result() throw() {}
+
+
+  bool operator == (const ShowService_standbyNum_result & /* rhs */) const
+  {
+    return true;
+  }
+  bool operator != (const ShowService_standbyNum_result &rhs) const {
+    return !(*this == rhs);
+  }
+
+  bool operator < (const ShowService_standbyNum_result & ) const;
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+  uint32_t write(::apache::thrift::protocol::TProtocol* oprot) const;
+
+};
+
+
+class ShowService_standbyNum_presult {
+ public:
+
+
+  virtual ~ShowService_standbyNum_presult() throw() {}
+
+
+  uint32_t read(::apache::thrift::protocol::TProtocol* iprot);
+
+};
+
 class ShowServiceClient : virtual public ShowServiceIf {
  public:
   ShowServiceClient(boost::shared_ptr< ::apache::thrift::protocol::TProtocol> prot) :
@@ -892,17 +1432,17 @@ class ShowServiceClient : virtual public ShowServiceIf {
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> getOutputProtocol() {
     return poprot_;
   }
-  int32_t addCueWithNumber(const double number, const std::string& name);
+  void addCueWithNumber(std::string& _return, const double number, const std::string& name);
   void send_addCueWithNumber(const double number, const std::string& name);
-  int32_t recv_addCueWithNumber();
-  int32_t addCueAtLocation(const int32_t location, const std::string& name);
-  void send_addCueAtLocation(const int32_t location, const std::string& name);
-  int32_t recv_addCueAtLocation();
+  void recv_addCueWithNumber(std::string& _return);
+  void addCueAtLocation(std::string& _return, const std::string& location, const std::string& name);
+  void send_addCueAtLocation(const std::string& location, const std::string& name);
+  void recv_addCueAtLocation(std::string& _return);
   void getCues(std::vector<CueData> & _return);
   void send_getCues();
   void recv_getCues(std::vector<CueData> & _return);
-  void getCue(CueData& _return, const int32_t id);
-  void send_getCue(const int32_t id);
+  void getCue(CueData& _return, const std::string& id);
+  void send_getCue(const std::string& id);
   void recv_getCue(CueData& _return);
   void deleteCue(const int32_t id);
   void send_deleteCue(const int32_t id);
@@ -913,9 +1453,27 @@ class ShowServiceClient : virtual public ShowServiceIf {
   void changeName(const int32_t id, const std::string& name);
   void send_changeName(const int32_t id, const std::string& name);
   void recv_changeName();
+  void addAudioActionById(const std::string& cueid, const std::string& filename);
+  void send_addAudioActionById(const std::string& cueid, const std::string& filename);
+  void recv_addAudioActionById();
+  void addAudioActionByNumber(const int32_t num, const std::string& filename);
+  void send_addAudioActionByNumber(const int32_t num, const std::string& filename);
+  void recv_addAudioActionByNumber();
   void newShow();
   void send_newShow();
   void recv_newShow();
+  void reset();
+  void send_reset();
+  void recv_reset();
+  void go();
+  void send_go();
+  void recv_go();
+  void standbyUid(const std::string& id);
+  void send_standbyUid(const std::string& id);
+  void recv_standbyUid();
+  void standbyNum(const double number);
+  void send_standbyNum(const double number);
+  void recv_standbyNum();
  protected:
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> piprot_;
   boost::shared_ptr< ::apache::thrift::protocol::TProtocol> poprot_;
@@ -936,7 +1494,13 @@ class ShowServiceProcessor : public ::apache::thrift::TProcessor {
   void process_deleteCue(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_changeNumber(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_changeName(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_addAudioActionById(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_addAudioActionByNumber(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
   void process_newShow(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_reset(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_go(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_standbyUid(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
+  void process_standbyNum(int32_t seqid, apache::thrift::protocol::TProtocol* iprot, apache::thrift::protocol::TProtocol* oprot, void* callContext);
  public:
   ShowServiceProcessor(boost::shared_ptr<ShowServiceIf> iface) :
     iface_(iface) {
@@ -947,7 +1511,13 @@ class ShowServiceProcessor : public ::apache::thrift::TProcessor {
     processMap_["deleteCue"] = &ShowServiceProcessor::process_deleteCue;
     processMap_["changeNumber"] = &ShowServiceProcessor::process_changeNumber;
     processMap_["changeName"] = &ShowServiceProcessor::process_changeName;
+    processMap_["addAudioActionById"] = &ShowServiceProcessor::process_addAudioActionById;
+    processMap_["addAudioActionByNumber"] = &ShowServiceProcessor::process_addAudioActionByNumber;
     processMap_["newShow"] = &ShowServiceProcessor::process_newShow;
+    processMap_["reset"] = &ShowServiceProcessor::process_reset;
+    processMap_["go"] = &ShowServiceProcessor::process_go;
+    processMap_["standbyUid"] = &ShowServiceProcessor::process_standbyUid;
+    processMap_["standbyNum"] = &ShowServiceProcessor::process_standbyNum;
   }
 
   virtual bool process(boost::shared_ptr<apache::thrift::protocol::TProtocol> piprot, boost::shared_ptr<apache::thrift::protocol::TProtocol> poprot, void* callContext);
@@ -977,24 +1547,26 @@ class ShowServiceMultiface : virtual public ShowServiceIf {
     ifaces_.push_back(iface);
   }
  public:
-  int32_t addCueWithNumber(const double number, const std::string& name) {
+  void addCueWithNumber(std::string& _return, const double number, const std::string& name) {
     size_t sz = ifaces_.size();
     for (size_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {
-        return ifaces_[i]->addCueWithNumber(number, name);
+        ifaces_[i]->addCueWithNumber(_return, number, name);
+        return;
       } else {
-        ifaces_[i]->addCueWithNumber(number, name);
+        ifaces_[i]->addCueWithNumber(_return, number, name);
       }
     }
   }
 
-  int32_t addCueAtLocation(const int32_t location, const std::string& name) {
+  void addCueAtLocation(std::string& _return, const std::string& location, const std::string& name) {
     size_t sz = ifaces_.size();
     for (size_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {
-        return ifaces_[i]->addCueAtLocation(location, name);
+        ifaces_[i]->addCueAtLocation(_return, location, name);
+        return;
       } else {
-        ifaces_[i]->addCueAtLocation(location, name);
+        ifaces_[i]->addCueAtLocation(_return, location, name);
       }
     }
   }
@@ -1011,7 +1583,7 @@ class ShowServiceMultiface : virtual public ShowServiceIf {
     }
   }
 
-  void getCue(CueData& _return, const int32_t id) {
+  void getCue(CueData& _return, const std::string& id) {
     size_t sz = ifaces_.size();
     for (size_t i = 0; i < sz; ++i) {
       if (i == sz - 1) {
@@ -1044,10 +1616,52 @@ class ShowServiceMultiface : virtual public ShowServiceIf {
     }
   }
 
+  void addAudioActionById(const std::string& cueid, const std::string& filename) {
+    size_t sz = ifaces_.size();
+    for (size_t i = 0; i < sz; ++i) {
+      ifaces_[i]->addAudioActionById(cueid, filename);
+    }
+  }
+
+  void addAudioActionByNumber(const int32_t num, const std::string& filename) {
+    size_t sz = ifaces_.size();
+    for (size_t i = 0; i < sz; ++i) {
+      ifaces_[i]->addAudioActionByNumber(num, filename);
+    }
+  }
+
   void newShow() {
     size_t sz = ifaces_.size();
     for (size_t i = 0; i < sz; ++i) {
       ifaces_[i]->newShow();
+    }
+  }
+
+  void reset() {
+    size_t sz = ifaces_.size();
+    for (size_t i = 0; i < sz; ++i) {
+      ifaces_[i]->reset();
+    }
+  }
+
+  void go() {
+    size_t sz = ifaces_.size();
+    for (size_t i = 0; i < sz; ++i) {
+      ifaces_[i]->go();
+    }
+  }
+
+  void standbyUid(const std::string& id) {
+    size_t sz = ifaces_.size();
+    for (size_t i = 0; i < sz; ++i) {
+      ifaces_[i]->standbyUid(id);
+    }
+  }
+
+  void standbyNum(const double number) {
+    size_t sz = ifaces_.size();
+    for (size_t i = 0; i < sz; ++i) {
+      ifaces_[i]->standbyNum(number);
     }
   }
 

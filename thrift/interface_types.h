@@ -17,7 +17,8 @@
 
 
 typedef struct _CueData__isset {
-  _CueData__isset() : number(false), name(false) {}
+  _CueData__isset() : uid(false), number(false), name(false) {}
+  bool uid;
   bool number;
   bool name;
 } _CueData__isset;
@@ -25,18 +26,23 @@ typedef struct _CueData__isset {
 class CueData {
  public:
 
-  static const char* ascii_fingerprint; // = "DD2684E5F49042C4C07B5348ECFFFD06";
-  static const uint8_t binary_fingerprint[16]; // = {0xDD,0x26,0x84,0xE5,0xF4,0x90,0x42,0xC4,0xC0,0x7B,0x53,0x48,0xEC,0xFF,0xFD,0x06};
+  static const char* ascii_fingerprint; // = "E0B9A2019B35873F5E3903C86979C4DE";
+  static const uint8_t binary_fingerprint[16]; // = {0xE0,0xB9,0xA2,0x01,0x9B,0x35,0x87,0x3F,0x5E,0x39,0x03,0xC8,0x69,0x79,0xC4,0xDE};
 
-  CueData() : number(0), name("") {
+  CueData() : uid(""), number(0), name("") {
   }
 
   virtual ~CueData() throw() {}
 
+  std::string uid;
   double number;
   std::string name;
 
   _CueData__isset __isset;
+
+  void __set_uid(const std::string& val) {
+    uid = val;
+  }
 
   void __set_number(const double val) {
     number = val;
@@ -48,6 +54,8 @@ class CueData {
 
   bool operator == (const CueData & rhs) const
   {
+    if (!(uid == rhs.uid))
+      return false;
     if (!(number == rhs.number))
       return false;
     if (!(name == rhs.name))

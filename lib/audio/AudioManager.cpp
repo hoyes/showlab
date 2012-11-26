@@ -3,6 +3,7 @@
 AudioManager::AudioManager()
 {
         Pa_Initialize();
+        addMixer("default");
 }
 
 AudioManager::~AudioManager()
@@ -69,4 +70,14 @@ AudioMixerRef AudioManager::addMixer(std::string name)
         AudioMixerRef m(new AudioMixer(d.id));
         mixers.push_back(m);
         return m;
+}
+
+AudioMixerRef AudioManager::getMixer(int index)
+{
+    return mixers[index];
+}
+
+unsigned int AudioManager::getMixerCount()
+{
+    return mixers.size();
 }

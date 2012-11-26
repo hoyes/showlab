@@ -23,14 +23,20 @@ if len(sys.argv) <= 1 or sys.argv[1] == '--help':
   print 'Usage: ' + sys.argv[0] + ' [-h host[:port]] [-u url] [-f[ramed]] function [arg1 [arg2...]]'
   print ''
   print 'Functions:'
-  print '  i32 addCueWithNumber(double number, string name)'
-  print '  i32 addCueAtLocation(i32 location, string name)'
+  print '  string addCueWithNumber(double number, string name)'
+  print '  string addCueAtLocation(string location, string name)'
   print '   getCues()'
-  print '  CueData getCue(i32 id)'
+  print '  CueData getCue(string id)'
   print '  void deleteCue(i32 id)'
   print '  void changeNumber(i32 id, double number)'
   print '  void changeName(i32 id, string name)'
+  print '  void addAudioActionById(string cueid, string filename)'
+  print '  void addAudioActionByNumber(i32 num, string filename)'
   print '  void newShow()'
+  print '  void reset()'
+  print '  void go()'
+  print '  void standbyUid(string id)'
+  print '  void standbyNum(double number)'
   print ''
   sys.exit(0)
 
@@ -92,7 +98,7 @@ elif cmd == 'addCueAtLocation':
   if len(args) != 2:
     print 'addCueAtLocation requires 2 args'
     sys.exit(1)
-  pp.pprint(client.addCueAtLocation(eval(args[0]),args[1],))
+  pp.pprint(client.addCueAtLocation(args[0],args[1],))
 
 elif cmd == 'getCues':
   if len(args) != 0:
@@ -104,7 +110,7 @@ elif cmd == 'getCue':
   if len(args) != 1:
     print 'getCue requires 1 args'
     sys.exit(1)
-  pp.pprint(client.getCue(eval(args[0]),))
+  pp.pprint(client.getCue(args[0],))
 
 elif cmd == 'deleteCue':
   if len(args) != 1:
@@ -124,11 +130,47 @@ elif cmd == 'changeName':
     sys.exit(1)
   pp.pprint(client.changeName(eval(args[0]),args[1],))
 
+elif cmd == 'addAudioActionById':
+  if len(args) != 2:
+    print 'addAudioActionById requires 2 args'
+    sys.exit(1)
+  pp.pprint(client.addAudioActionById(args[0],args[1],))
+
+elif cmd == 'addAudioActionByNumber':
+  if len(args) != 2:
+    print 'addAudioActionByNumber requires 2 args'
+    sys.exit(1)
+  pp.pprint(client.addAudioActionByNumber(eval(args[0]),args[1],))
+
 elif cmd == 'newShow':
   if len(args) != 0:
     print 'newShow requires 0 args'
     sys.exit(1)
   pp.pprint(client.newShow())
+
+elif cmd == 'reset':
+  if len(args) != 0:
+    print 'reset requires 0 args'
+    sys.exit(1)
+  pp.pprint(client.reset())
+
+elif cmd == 'go':
+  if len(args) != 0:
+    print 'go requires 0 args'
+    sys.exit(1)
+  pp.pprint(client.go())
+
+elif cmd == 'standbyUid':
+  if len(args) != 1:
+    print 'standbyUid requires 1 args'
+    sys.exit(1)
+  pp.pprint(client.standbyUid(args[0],))
+
+elif cmd == 'standbyNum':
+  if len(args) != 1:
+    print 'standbyNum requires 1 args'
+    sys.exit(1)
+  pp.pprint(client.standbyNum(eval(args[0]),))
 
 else:
   print 'Unrecognized method %s' % cmd
