@@ -1,0 +1,7 @@
+env2 = Environment()
+sources2 = Glob("*.cpp")
+env2.Program(target='simpleshowstore', source=sources2)
+env2.Append(CCFLAGS = ['-Wall','-std=c++0x', '-g'])
+env2.Append(LIBS = ['showstore', 'boost_system'])
+env2.Append(CPPPATH = '../libshowstore/')
+env2.Append(LIBPATH = '../lib/')

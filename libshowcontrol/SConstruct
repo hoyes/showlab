@@ -1,0 +1,7 @@
+env = Environment()
+sources = Glob("*.cpp")
+env.SharedLibrary(target='showcontrol', source=sources)
+env.Append(CCFLAGS = ['-Wall','-std=c++0x', '-g'])
+env.Append(LIBS = ['showstore','boost_system'])
+env.Append(CPPPATH = '../libshowstore/')
+env.Append(LIBPATH = '../lib/')
