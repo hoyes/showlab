@@ -29,17 +29,17 @@ class StoreItem
 {
 private:
     ItemId mId;
-    ConfigNode mConfig;
+    ConfigNodeRef mConfig;
     StoreItemList mChildren;
     
 protected:
-    ConfigNode& GetConfig() { return mConfig; }
+    ConfigNodeRef config() { return mConfig; }
     
 public:
-    StoreItem(ItemId id, ConfigNode config) : mId(id), mConfig(config) {};
+    StoreItem(ItemId id, ConfigNodeRef config) : mId(id), mConfig(config) {};
 
-    std::string Name() { return GetConfig().GetNode("name").GetValue(); }
-    void Name(std::string v) { GetConfig().GetNode("name").SetValue(v); }
+    std::string Name() { return *config()->node("name"); }
+    void Name(std::string v) { config()->node("name")->value(v); }
     
     ItemId Id() { return mId; }
     void Id(ItemId id) { mId = id; }
@@ -49,9 +49,35 @@ public:
     virtual void AddChild(StoreItemRef item) { mChildren[item->Id()] = item; }
     StoreItemList& items() { return mChildren; }
     
-    ConfigNode& operator[] (std::string key) { return mConfig.GetNode(key); }
+    ConfigNodeRef operator[] (std::string key) { return mConfig->node(key); }
+    
+    void resolveRefs();
+    void resolveRefsFromItem(StoreItem* item, ConfigNodeRef config);
     
 };
+
+
+class RefConfigNode : public BaseConfigNode {
+private:
+    ItemId mId;
+    StoreItemRef mRef;
+    bool mResolved;
+public:
+    RefConfigNode(ItemId id) : mId(id), mResolved(false) {};
+    RefConfigNode(StoreItemRef ref) : mId(ref->Id()), mRef(ref), mResolved(true) {};
+    virtual ConfigNodeType type() { return TYPE_REF; }
+    virtual operator std::string () { return mId.str(); }
+    operator StoreItemRef () { return mRef; }
+    operator ItemId () { return mId; }
+    
+    bool resolved() { return mResolved; }
+    ItemId id() { return mId; }
+    StoreItemRef ref() { return mRef; }
+    
+    void resolve(StoreItemRef ref) { if (!mResolved) mRef =  ref; }
+};
+
+typedef std::shared_ptr<RefConfigNode> RefConfigNodeRef;
 
 }}
 

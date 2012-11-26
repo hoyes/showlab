@@ -9,16 +9,18 @@
 namespace showlab {
 namespace showstore {
 
-class Action;
-
 class Action : public StoreItem
 {
 private:
     
 public:
-    Action(ItemId id, ConfigNode config) : StoreItem(id, config) {};
+    Action(ItemId id, ConfigNodeRef config) : StoreItem(id, config) {};
     
     virtual ItemType Type() { return TYPE_ACTION; }
+    
+    std::string Class() { return *config()->node("class"); }
+    
+    std::string subClass() { return *config()->node("subclass"); }
 };
 
 typedef std::shared_ptr<Action> ActionRef;

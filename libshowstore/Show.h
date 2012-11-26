@@ -26,7 +26,7 @@ private:
     ResourceList mResources;
 
 public:
-    Show(ItemId id, ConfigNode config) : StoreItem(id, config) {};
+    Show(ItemId id, ConfigNodeRef config) : StoreItem(id, config) {};
     
     virtual ItemType Type() { return TYPE_SHOW; }
     

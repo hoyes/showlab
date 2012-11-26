@@ -11,7 +11,7 @@ class ExecutorDef : public StoreItem
 private:
 
 public:
-    ExecutorDef(ItemId id, ConfigNode config) : StoreItem(id, config) {};
+    ExecutorDef(ItemId id, ConfigNodeRef config) : StoreItem(id, config) {};
     
     virtual ItemType Type() { return TYPE_EXECUTOR_DEF; }
 };

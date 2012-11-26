@@ -13,10 +13,14 @@ private:
 
 
 public:
-    Resource(ItemId id, ConfigNode config) : StoreItem(id, config) {};
+    Resource(ItemId id, ConfigNodeRef config) : StoreItem(id, config) {};
     
     virtual ItemType Type() { return TYPE_RESOURCE; }
     
+    std::string fileName() { return *config()->node("filename"); }
+    std::string extension() { return *config()->node("extension"); }
+    std::string mime() { return *config()->node("mime"); }
+    int size() { return *config()->node("size"); }
     
 };
 

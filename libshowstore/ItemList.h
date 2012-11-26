@@ -24,6 +24,7 @@ public:
     T& operator[](ItemId id) { return get(id); }
     
     void clear() { mChildren.clear(); }
+    iterator find(ItemId id)  { return mChildren.find(id); }
 };
 
 }}

@@ -27,7 +27,7 @@ std::string ItemId::str()
 
 bool ItemId::isValidId(std::string id)
 {
-    static boost::regex id_regex("^[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}$");
+    static boost::regex id_regex("^[a-f0-9]{8}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{4}\\-[a-f0-9]{12}$");
     return boost::regex_match(id, id_regex);
 }
 

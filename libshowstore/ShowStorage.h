@@ -4,6 +4,7 @@
 #include <string>
 #include "StoreItem.h"
 #include <boost/filesystem.hpp>
+#include <yaml-cpp/yaml.h>
 
 namespace showlab {
 namespace showstore {
@@ -13,8 +14,9 @@ class ShowStorage
 public:
     std::string GetStoragePath();
     void LoadStoreItems(StoreItemList& itemlist);
-    ConfigNode CreateNodeFromFile(std::string filename);
+    ConfigNodeRef CreateNodeFromFile(std::string filename);
     StoreItemRef CreateStoreItem(boost::filesystem::path itempath);
+    ConfigNodeRef ParseNode(YAML::Node y_node);
 };
 
 }}

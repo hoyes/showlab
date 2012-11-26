@@ -13,9 +13,10 @@ private:
 
 
 public:
-    CueStack(ItemId id, ConfigNode config) : StoreItem(id, config) {};
+    CueStack(ItemId id, ConfigNodeRef config) : StoreItem(id, config) {};
     
     virtual ItemType Type() { return TYPE_CUE_STACK; }
+    
 };
 
 typedef std::shared_ptr<CueStack> CueStackRef;
